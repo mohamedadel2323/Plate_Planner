@@ -1,16 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.example.plateplanner'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.plateplanner"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -36,6 +37,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    //firebase auth
+    implementation 'com.google.firebase:firebase-auth:22.0.0'
+    //lottie
     implementation "com.airbnb.android:lottie:3.4.0"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

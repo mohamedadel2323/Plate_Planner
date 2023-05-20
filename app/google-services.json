@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "329535480551",
+    "project_id": "plate-planner-7c960",
+    "storage_bucket": "plate-planner-7c960.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329535480551:android:36c651f3167f8d757e7842",
+        "android_client_info": {
+          "package_name": "com.example.plateplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329535480551-f9cq06ntnnp48okqdpqca5s67obt8bna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plateplanner",
+            "certificate_hash": "bd140b3b4336d43b33777834e801bca162f586d5"
+          }
+        },
+        {
+          "client_id": "329535480551-u80etqn14nvmr2i7m6fsdhcii4fr2ffc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVcXItEwM8G-pfrGMC1rdXvgobZfhziI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329535480551-u80etqn14nvmr2i7m6fsdhcii4fr2ffc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
