@@ -13,6 +13,20 @@
         tools:context=".ui.SignInFragment">
 
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:elevation="2dp"
+            android:id="@+id/signInLoadingAnimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -22,10 +36,10 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/backButton" />
+            app:layout_constraintTop_toBottomOf="@+id/signInBackButton" />
 
         <ImageButton
-            android:id="@+id/backButton"
+            android:id="@+id/signInBackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -84,7 +98,7 @@
 
 
         <TextView
-            android:id="@+id/resultTv"
+            android:id="@+id/signInResultTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -110,7 +124,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/resultTv" />
+            app:layout_constraintTop_toBottomOf="@id/signInResultTv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

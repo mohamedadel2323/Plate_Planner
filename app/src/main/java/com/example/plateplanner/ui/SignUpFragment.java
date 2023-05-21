@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +40,7 @@ public class SignUpFragment extends Fragment {
     TextInputEditText passwordEt;
     TextInputEditText confirmPasswordEt;
     TextView resultTv;
+    LottieAnimationView loadingLottie;
     AuthModel authModel = new AuthModel();
     private final String TAG = "SignUpFragment";
 
@@ -62,14 +65,14 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        backBtn = view.findViewById(R.id.backButton);
+        backBtn = view.findViewById(R.id.signUpBackButton);
         doneBtn = view.findViewById(R.id.doneSignUpButton);
         displayNameEt = view.findViewById(R.id.displayNameSignUpEt);
         emailEt = view.findViewById(R.id.emailSignUpEt);
         passwordEt = view.findViewById(R.id.passwordSignUpEt);
         confirmPasswordEt = view.findViewById(R.id.confirmPasswordSignUpEt);
         resultTv = view.findViewById(R.id.resultTv);
-
+        loadingLottie = view.findViewById(R.id.signUpLoadingAnimation);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,16 +88,24 @@ public class SignUpFragment extends Fragment {
                 if (!result.isEmpty())
                     resultTv.setText(result);
                 else {
+                    loadingLottie.setVisibility(View.VISIBLE);
+                    loadingLottie.playAnimation();
                     //signup using firebase
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(authModel.getEmail() , authModel.getPassword())
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(authModel.getEmail(), authModel.getPassword())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         Log.i(TAG, "Signed up successfully");
-                                    }else {
-                                        Log.i(TAG, "Signed up Failed");
+                                        navController.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment());
                                     }
+                                    loadingLottie.setVisibility(View.GONE);
+                                    loadingLottie.pauseAnimation();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    resultTv.setText(e.getLocalizedMessage());
                                 }
                             });
                 }
@@ -111,21 +122,21 @@ public class SignUpFragment extends Fragment {
         authModel.setName(displayNameEt.getText().toString());
         authModel.setEmail(emailEt.getText().toString());
         authModel.setPassword(passwordEt.getText().toString());
-        if(authModel.getEmail().isEmpty()){
+        if (authModel.getEmail().isEmpty()) {
             resultMessage = "Email can't be empty.";
-        }else if (!pattern.matcher(authModel.getEmail()).matches()){
+        } else if (!pattern.matcher(authModel.getEmail()).matches()) {
             resultMessage = "Enter valid email please.";
         }
-        if (authModel.getName().isEmpty()){
+        if (authModel.getName().isEmpty()) {
             resultMessage = "Display Name can't be empty.";
         }
-        if (authModel.getPassword().isEmpty()){
+        if (authModel.getPassword().isEmpty()) {
             resultMessage = "Password field can't be empty.";
         }
-        if (confirmPasswordEt.getText().toString().isEmpty()){
+        if (confirmPasswordEt.getText().toString().isEmpty()) {
             resultMessage = "Confirm Password field can't be empty.";
         }
-        if (!authModel.getPassword().equals(confirmPasswordEt.getText().toString())){
+        if (!authModel.getPassword().equals(confirmPasswordEt.getText().toString())) {
             resultMessage = "Confirm Password is not identical";
         }
 

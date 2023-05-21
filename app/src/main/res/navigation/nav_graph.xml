@@ -36,6 +36,10 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.plateplanner.ui.SignUpFragment"
-        android:label="@string/sign_up" />
+        android:label="@string/sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 
 </navigation>
