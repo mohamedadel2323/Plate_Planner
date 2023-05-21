@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.plateplanner.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
@@ -34,6 +39,7 @@ public class SignUpFragment extends Fragment {
     TextInputEditText confirmPasswordEt;
     TextView resultTv;
     AuthModel authModel = new AuthModel();
+    private final String TAG = "SignUpFragment";
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -57,11 +63,11 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         backBtn = view.findViewById(R.id.backButton);
-        doneBtn = view.findViewById(R.id.doneButton);
-        displayNameEt = view.findViewById(R.id.displayNameEt);
-        emailEt = view.findViewById(R.id.emailEt);
-        passwordEt = view.findViewById(R.id.passwordEt);
-        confirmPasswordEt = view.findViewById(R.id.confirmPasswordEt);
+        doneBtn = view.findViewById(R.id.doneSignUpButton);
+        displayNameEt = view.findViewById(R.id.displayNameSignUpEt);
+        emailEt = view.findViewById(R.id.emailSignUpEt);
+        passwordEt = view.findViewById(R.id.passwordSignUpEt);
+        confirmPasswordEt = view.findViewById(R.id.confirmPasswordSignUpEt);
         resultTv = view.findViewById(R.id.resultTv);
 
 
@@ -80,6 +86,17 @@ public class SignUpFragment extends Fragment {
                     resultTv.setText(result);
                 else {
                     //signup using firebase
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(authModel.getEmail() , authModel.getPassword())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        Log.i(TAG, "Signed up successfully");
+                                    }else {
+                                        Log.i(TAG, "Signed up Failed");
+                                    }
+                                }
+                            });
                 }
             }
         });
