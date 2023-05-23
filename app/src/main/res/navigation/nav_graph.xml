@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.plateplanner.ui.SplashFragment"
+        android:name="com.example.plateplanner.startactivity.view.SplashFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_splash">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInOptionsFragment"
-        android:name="com.example.plateplanner.ui.SignInOptionsFragment"
+        android:name="com.example.plateplanner.startactivity.view.SignInOptionsFragment"
         android:label="@string/options"
         tools:layout="@layout/fragment_sign_in_options">
         <action
@@ -30,16 +30,18 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.plateplanner.ui.SignInFragment"
+        android:name="com.example.plateplanner.startactivity.view.SignInFragment"
         android:label="@string/sign_in"
         tools:layout="@layout/fragment_sign_in" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.plateplanner.ui.SignUpFragment"
-        android:label="@string/sign_up" >
+        android:name="com.example.plateplanner.startactivity.view.SignUpFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/signInOptionsFragment" />
     </fragment>
 
 </navigation>

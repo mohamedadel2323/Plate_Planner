@@ -1,4 +1,4 @@
-package pojo;
+package com.example.plateplanner.startactivity.model;
 
 public class AuthModel {
     private String name;
@@ -11,6 +11,10 @@ public class AuthModel {
 
     public AuthModel(String name, String email, String password) {
         this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+    public AuthModel(String email, String password) {
         this.email = email;
         this.password = password;
     }

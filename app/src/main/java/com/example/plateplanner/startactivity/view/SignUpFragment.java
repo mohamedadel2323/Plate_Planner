@@ -1,4 +1,4 @@
-package com.example.plateplanner.ui;
+package com.example.plateplanner.startactivity.view;
 
 import android.os.Bundle;
 
@@ -18,6 +18,10 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
+import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
+import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.startactivity.network.FirebaseCalls;
+import com.example.plateplanner.startactivity.presenter.SignUpPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -27,10 +31,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
-import pojo.AuthModel;
+import com.example.plateplanner.startactivity.model.AuthModel;
 
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements SignUpViewInterface{
 
     ImageButton backBtn;
     NavController navController;
@@ -42,6 +46,7 @@ public class SignUpFragment extends Fragment {
     TextView resultTv;
     LottieAnimationView loadingLottie;
     AuthModel authModel = new AuthModel();
+    SignUpPresenter signUpPresenter;
     private final String TAG = "SignUpFragment";
 
     public SignUpFragment() {
@@ -64,6 +69,17 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        signUpPresenter = new SignUpPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance()));
+
+        initUi(view);
+
+        clickListeners();
+
+
+    }
+
+    private void initUi(View view) {
         navController = Navigation.findNavController(view);
         backBtn = view.findViewById(R.id.signUpBackButton);
         doneBtn = view.findViewById(R.id.doneSignUpButton);
@@ -73,14 +89,16 @@ public class SignUpFragment extends Fragment {
         confirmPasswordEt = view.findViewById(R.id.confirmPasswordSignUpEt);
         resultTv = view.findViewById(R.id.resultTv);
         loadingLottie = view.findViewById(R.id.signUpLoadingAnimation);
+    }
 
-
+    private void clickListeners() {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigateUp();
             }
         });
+
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,26 +109,15 @@ public class SignUpFragment extends Fragment {
                     loadingLottie.setVisibility(View.VISIBLE);
                     loadingLottie.playAnimation();
                     //signup using firebase
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(authModel.getEmail(), authModel.getPassword())
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.i(TAG, "Signed up successfully");
-                                        navController.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment());
-                                    }
-                                    loadingLottie.setVisibility(View.GONE);
-                                    loadingLottie.pauseAnimation();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    resultTv.setText(e.getLocalizedMessage());
-                                }
-                            });
+                    signUpWithFirebase();
                 }
             }
         });
+    }
+
+
+    private void signUpWithFirebase() {
+        signUpPresenter.signUp(authModel);
     }
 
     private String validate() {
@@ -141,5 +148,19 @@ public class SignUpFragment extends Fragment {
         }
 
         return resultMessage;
+    }
+
+    @Override
+    public void onSignupSuccess() {
+        navController.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment());
+        loadingLottie.setVisibility(View.GONE);
+        loadingLottie.pauseAnimation();
+    }
+
+    @Override
+    public void onSignupFailed(String errorMessage) {
+        resultTv.setText(errorMessage);
+        loadingLottie.setVisibility(View.GONE);
+        loadingLottie.pauseAnimation();
     }
 }

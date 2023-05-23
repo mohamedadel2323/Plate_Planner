@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.SignUpFragment">
+        tools:context=".startactivity.view.SignUpFragment">
 
 
         <com.airbnb.lottie.LottieAnimationView
