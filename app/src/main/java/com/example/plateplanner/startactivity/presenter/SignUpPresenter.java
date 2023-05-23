@@ -23,26 +23,13 @@ public class SignUpPresenter implements FirebaseDelegate {
     }
 
     public void signUp(AuthModel authModel) {
-//        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            onSuccess();
-//                        }
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        onFail(e.getLocalizedMessage());
-//                    }
-//                });
         repositoryInterface.SignUp(authModel , this);
     }
 
     @Override
     public void onSuccess() {
         view.onSignupSuccess();
+        repositoryInterface.setLoginStatus(true);
     }
 
     @Override

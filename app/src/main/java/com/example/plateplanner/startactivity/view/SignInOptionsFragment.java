@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.plateplanner.R;
 import com.example.plateplanner.homeactivity.HomeActivity;
+import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -155,6 +156,8 @@ public class SignInOptionsFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.i(TAG, "google sign in success");
+                    AuthSharedPreferences authSharedPreferences = AuthSharedPreferences.getInstance(getContext());
+                    authSharedPreferences.setLoginStatus(true);
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     startActivity(intent);
                     getActivity().finish();

@@ -30,6 +30,7 @@ public class SignInPresenter implements FirebaseDelegate {
     @Override
     public void onSuccess() {
         view.onLoginSuccess();
+        repositoryInterface.setLoginStatus(true);
     }
 
     @Override

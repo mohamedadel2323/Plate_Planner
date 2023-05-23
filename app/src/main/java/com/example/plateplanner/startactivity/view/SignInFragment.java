@@ -132,26 +132,6 @@ public class SignInFragment extends Fragment implements SignInViewInterface{
         });
     }
 
-//    @Override
-//    public void signIn(String email, String password) {
-//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()) {
-//                    startActivity(intent);
-//                    getActivity().finish();
-//                }
-//                loadingLottie.setVisibility(View.GONE);
-//                loadingLottie.pauseAnimation();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                errorTv.setText(e.getLocalizedMessage());
-//            }
-//        });
-//    }
-
     @Override
     public void onLoginSuccess() {
         startActivity(intent);
