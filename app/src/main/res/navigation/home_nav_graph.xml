@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.plateplanner.homeactivity.HomeFragment"
+        android:name="com.example.plateplanner.homeactivity.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.plateplanner.homeactivity.SearchFragment"
+        android:name="com.example.plateplanner.homeactivity.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.plateplanner.homeactivity.FavouritesFragment"
+        android:name="com.example.plateplanner.homeactivity.view.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" />
     <fragment
         android:id="@+id/calenderFragment"
-        android:name="com.example.plateplanner.homeactivity.CalenderFragment"
+        android:name="com.example.plateplanner.homeactivity.view.CalenderFragment"
         android:label="fragment_calender"
         tools:layout="@layout/fragment_calender" />
 </navigation>

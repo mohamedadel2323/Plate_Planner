@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
-import com.example.plateplanner.homeactivity.HomeActivity;
+import com.example.plateplanner.homeactivity.view.HomeActivity;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.Repository;
-import com.example.plateplanner.startactivity.model.RepositoryInterface;
-import com.example.plateplanner.startactivity.network.FirebaseCalls;
+import com.example.plateplanner.network.ApiClient;
+import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.presenter.SplashPresenter;
 
 public class SplashFragment extends Fragment implements SplashViewInterface {
@@ -49,7 +49,7 @@ public class SplashFragment extends Fragment implements SplashViewInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        splashPresenter = new SplashPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance()));
+        splashPresenter = new SplashPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance() , ApiClient.getInstance()));
         splashAnimation = view.findViewById(R.id.splashAnimation);
         splashAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override

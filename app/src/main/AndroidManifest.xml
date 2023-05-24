@@ -15,7 +15,7 @@
         android:theme="@style/Theme.PlatePlanner"
         tools:targetApi="31">
         <activity
-            android:name=".homeactivity.HomeActivity"
+            android:name=".homeactivity.view.HomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

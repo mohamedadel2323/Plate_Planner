@@ -12,4 +12,7 @@
     <color name="text_back_color">#7C000000</color>
     <color name="txt_ripple_color">#8BE0CCCC</color>
     <color name="btn_ripple_color">#8B851515</color>
+    <color name="heart_back">#85FFFFFF</color>
+    <color name="item_color">#DDDAD4</color>
+    <color name="status_bar">#22FFFFFF</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.plateplanner.homeactivity;
+package com.example.plateplanner.homeactivity.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;

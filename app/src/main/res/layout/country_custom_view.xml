@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/countryCard"
+    android:layout_width="150dp"
+    android:backgroundTint="@color/item_color"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/dailyInspirationTv"
+    app:layout_constraintVertical_weight="3">
+
+        <TextView
+            android:id="@+id/countryTitle"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintVertical_bias="1.0"
+            android:textAlignment="center"
+            tools:text="Shakshoka" />
+
+</androidx.cardview.widget.CardView>

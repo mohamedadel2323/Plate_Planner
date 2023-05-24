@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.Repository;
-import com.example.plateplanner.startactivity.network.FirebaseCalls;
+import com.example.plateplanner.network.ApiClient;
+import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.presenter.SignUpPresenter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
@@ -70,7 +65,7 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        signUpPresenter = new SignUpPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance()));
+        signUpPresenter = new SignUpPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance() , ApiClient.getInstance()));
 
         initUi(view);
 

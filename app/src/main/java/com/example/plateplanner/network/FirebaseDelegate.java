@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.network;
+package com.example.plateplanner.network;
 
 public interface FirebaseDelegate {
     public void onSuccess();

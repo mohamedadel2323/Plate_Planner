@@ -16,4 +16,7 @@
     <string name="search">Search</string>
     <string name="favourite">Favourite</string>
     <string name="calender">Calender</string>
+    <string name="daily_inspiration">Daily Inspiration</string>
+    <string name="categories">Categories</string>
+    <string name="countries">Countries</string>
 </resources>

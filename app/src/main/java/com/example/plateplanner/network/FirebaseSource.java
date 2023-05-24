@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.network;
+package com.example.plateplanner.network;
 
 import com.example.plateplanner.startactivity.model.AuthModel;
 
