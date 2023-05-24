@@ -1,4 +1,4 @@
-package com.example.plateplanner;
+package com.example.plateplanner.homeactivity.view;
 
 
 import android.content.Context;
@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.plateplanner.R;
 import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
@@ -100,8 +101,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.title.setText(categories.get(position).getStrCategory());
             Glide.with(context)
                     .load(categories.get(position).getStrCategoryThumb())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.loading_img)
+                    .error(R.drawable.ic_broken_image)
                     .into(holder.image);
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +20,9 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
-import com.example.plateplanner.RecyclerAdapter;
 import com.example.plateplanner.homeactivity.presenter.HomeFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
@@ -40,10 +39,14 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
     TextView mealName;
     HomeFragmentPresenter homeFragmentPresenter;
     RecyclerView categoriesRv;
+    TextView categoriesTv;
     RecyclerView countriesRv;
+    TextView countriesTv;
     RecyclerAdapter categoriesAdapter;
     RecyclerAdapter areasAdapter;
+    ImageButton addToFavoriteBtn;
     LottieAnimationView loading;
+    boolean clicked = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,6 +70,20 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         super.onViewCreated(view, savedInstanceState);
         homeFragmentPresenter = new HomeFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance()));
         initUi(view);
+        hideUi();
+
+        addToFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!clicked){
+                    addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
+                    clicked = true;
+                }else {
+                    addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
+                    clicked = false;
+                }
+            }
+        });
         loading.setVisibility(View.VISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -89,6 +106,25 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         categoriesRv = view.findViewById(R.id.categoriesRv);
         countriesRv = view.findViewById(R.id.countriesRv);
         loading = view.findViewById(R.id.loading);
+        categoriesTv = view.findViewById(R.id.categoriesTv);
+        countriesTv = view.findViewById(R.id.countriesTv);
+        addToFavoriteBtn = view.findViewById(R.id.addToFavoriteBtn);
+    }
+    private void hideUi(){
+        mealImage.setVisibility(View.INVISIBLE);
+        mealName.setVisibility(View.INVISIBLE);
+        categoriesRv.setVisibility(View.INVISIBLE);
+        countriesRv.setVisibility(View.INVISIBLE);
+        categoriesTv.setVisibility(View.INVISIBLE);
+        countriesTv.setVisibility(View.INVISIBLE);
+    }
+    private void showUi(){
+        mealImage.setVisibility(View.VISIBLE);
+        mealName.setVisibility(View.VISIBLE);
+        categoriesRv.setVisibility(View.VISIBLE);
+        countriesRv.setVisibility(View.VISIBLE);
+        categoriesTv.setVisibility(View.VISIBLE);
+        countriesTv.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -108,6 +144,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         Toast.makeText(getContext(), "No Connection", Toast.LENGTH_SHORT).show();
         loading.pauseAnimation();
         loading.setVisibility(View.GONE);
+        showUi();
     }
 
     @Override
@@ -122,6 +159,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         areasAdapter.setAreas(areas);
         loading.pauseAnimation();
         loading.setVisibility(View.GONE);
+        showUi();
     }
 
     @Override

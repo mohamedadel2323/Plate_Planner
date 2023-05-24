@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".startactivity.view.SplashFragment">
+    tools:context=".startactivity.view.SplashFragment"
+    android:background="@color/item_color">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/splashAnimation"
@@ -14,6 +15,18 @@
         app:lottie_rawRes="@raw/splash"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="32sp"
+        android:fontFamily="cursive"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
         />
 
 </FrameLayout>
