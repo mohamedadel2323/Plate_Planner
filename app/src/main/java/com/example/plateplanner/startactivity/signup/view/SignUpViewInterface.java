@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.view;
+package com.example.plateplanner.startactivity.signup.view;
 
 public interface SignUpViewInterface {
     public void onSignupSuccess();

@@ -1,4 +1,4 @@
-package com.example.plateplanner.homeactivity.view;
+package com.example.plateplanner.homeactivity.home.view;
 
 import android.os.Bundle;
 
@@ -20,7 +20,8 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
-import com.example.plateplanner.homeactivity.presenter.HomeFragmentPresenter;
+import com.example.plateplanner.homeactivity.home.presenter.HomeFragmentPresenter;
+import com.example.plateplanner.homeactivity.view.RecyclerAdapter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;

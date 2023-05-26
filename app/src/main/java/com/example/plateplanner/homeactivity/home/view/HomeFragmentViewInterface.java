@@ -1,4 +1,4 @@
-package com.example.plateplanner.homeactivity.view;
+package com.example.plateplanner.homeactivity.home.view;
 
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.CategoryPojo;

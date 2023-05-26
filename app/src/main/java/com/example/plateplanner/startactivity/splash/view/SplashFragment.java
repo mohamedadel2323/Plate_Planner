@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.view;
+package com.example.plateplanner.startactivity.splash.view;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.Repository;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.presenter.SplashPresenter;
+import com.example.plateplanner.startactivity.splash.presenter.SplashPresenter;
 
 public class SplashFragment extends Fragment implements SplashViewInterface {
 

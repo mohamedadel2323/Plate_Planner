@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeactivity.view.FavouritesFragment"
+    tools:context=".homeactivity.favorites.view.FavoritesFragment"
     android:padding="8dp">
 
     <TextView

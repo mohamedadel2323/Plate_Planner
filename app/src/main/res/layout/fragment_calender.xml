@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".homeactivity.view.CalenderFragment">
+        tools:context=".homeactivity.calender.view.CalenderFragment">
 
         <TextView
             android:id="@+id/sundayTv"

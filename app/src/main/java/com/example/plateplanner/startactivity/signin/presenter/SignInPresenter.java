@@ -1,32 +1,35 @@
-package com.example.plateplanner.startactivity.presenter;
+package com.example.plateplanner.startactivity.signin.presenter;
 
 import com.example.plateplanner.startactivity.model.AuthModel;
 import com.example.plateplanner.startactivity.model.RepositoryInterface;
 import com.example.plateplanner.network.FirebaseDelegate;
-import com.example.plateplanner.startactivity.view.SignUpViewInterface;
+import com.example.plateplanner.startactivity.signin.view.SignInViewInterface;
 
-public class SignUpPresenter implements FirebaseDelegate {
-
-    SignUpViewInterface view;
+public class SignInPresenter implements FirebaseDelegate {
+    SignInViewInterface view;
     RepositoryInterface repositoryInterface;
 
-    public SignUpPresenter(SignUpViewInterface view ,RepositoryInterface repositoryInterface) {
+    public SignInPresenter(SignInViewInterface view , RepositoryInterface repositoryInterface){
         this.view = view;
         this.repositoryInterface = repositoryInterface;
     }
 
-    public void signUp(AuthModel authModel) {
-        repositoryInterface.SignUp(authModel , this);
+
+
+    public void signIn(AuthModel authModel){
+        repositoryInterface.signIn(authModel , this);
     }
 
     @Override
     public void onSuccess() {
-        view.onSignupSuccess();
+        view.onLoginSuccess();
         repositoryInterface.setLoginStatus(true);
     }
 
     @Override
     public void onFail(String errorMessage) {
-        view.onSignupFailed(errorMessage);
+        view.onLoginFailed(errorMessage);
     }
+
+
 }

@@ -1,10 +1,7 @@
-package com.example.plateplanner.homeactivity.presenter;
+package com.example.plateplanner.homeactivity.home.presenter;
 
-import android.util.Log;
-
-import com.example.plateplanner.homeactivity.view.HomeFragmentViewInterface;
+import com.example.plateplanner.homeactivity.home.view.HomeFragmentViewInterface;
 import com.example.plateplanner.network.NetworkDelegate;
-import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.MealPojo;

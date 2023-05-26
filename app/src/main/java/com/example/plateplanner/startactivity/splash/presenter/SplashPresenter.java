@@ -1,7 +1,7 @@
-package com.example.plateplanner.startactivity.presenter;
+package com.example.plateplanner.startactivity.splash.presenter;
 
 import com.example.plateplanner.startactivity.model.RepositoryInterface;
-import com.example.plateplanner.startactivity.view.SplashViewInterface;
+import com.example.plateplanner.startactivity.splash.view.SplashViewInterface;
 
 public class SplashPresenter {
     SplashViewInterface view;

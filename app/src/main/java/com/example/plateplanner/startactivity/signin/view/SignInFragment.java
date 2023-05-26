@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.view;
+package com.example.plateplanner.startactivity.signin.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +23,12 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.Repository;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.presenter.SignInPresenter;
+import com.example.plateplanner.startactivity.signin.presenter.SignInPresenter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.regex.Pattern;
 
-public class SignInFragment extends Fragment implements SignInViewInterface{
+public class SignInFragment extends Fragment implements SignInViewInterface {
 
     public final String TAG = "SignInFragment";
 

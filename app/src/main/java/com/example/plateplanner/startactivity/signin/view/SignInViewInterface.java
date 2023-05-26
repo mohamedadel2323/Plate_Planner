@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.view;
+package com.example.plateplanner.startactivity.signin.view;
 
 import android.content.Intent;
 
