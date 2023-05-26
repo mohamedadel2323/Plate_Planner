@@ -1,15 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeactivity.view.CalenderFragment">
+    android:padding="8dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Calender"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        tools:context=".homeactivity.view.CalenderFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/sundayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sunday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sundayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/sundayTv"
+            app:layout_constraintStart_toStartOf="@id/sundayTv"
+            app:layout_constraintTop_toBottomOf="@id/sundayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/mondayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/monday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sundayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mondayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/mondayTv"
+            app:layout_constraintStart_toStartOf="@id/mondayTv"
+            app:layout_constraintTop_toBottomOf="@id/mondayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/tuesdayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuesday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mondayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tuesdayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/tuesdayTv"
+            app:layout_constraintStart_toStartOf="@id/tuesdayTv"
+            app:layout_constraintTop_toBottomOf="@id/tuesdayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/wednesdayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wednesday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tuesdayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wednesdayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/wednesdayTv"
+            app:layout_constraintStart_toStartOf="@id/wednesdayTv"
+            app:layout_constraintTop_toBottomOf="@id/wednesdayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/thursdayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thursday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wednesdayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/thursdayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/thursdayTv"
+            app:layout_constraintStart_toStartOf="@id/thursdayTv"
+            app:layout_constraintTop_toBottomOf="@id/thursdayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/fridayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/friday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thursdayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fridayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/fridayTv"
+            app:layout_constraintStart_toStartOf="@id/fridayTv"
+            app:layout_constraintTop_toBottomOf="@id/fridayTv"
+            tools:listitem="@layout/category_custom_item" />
+
+        <TextView
+            android:id="@+id/saturdayTv"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/saturday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fridayRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/saturdayRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/saturdayTv"
+            app:layout_constraintStart_toStartOf="@id/saturdayTv"
+            app:layout_constraintTop_toBottomOf="@id/saturdayTv"
+            tools:listitem="@layout/category_custom_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

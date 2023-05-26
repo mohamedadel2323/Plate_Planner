@@ -75,10 +75,10 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         addToFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!clicked){
+                if (!clicked) {
                     addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
                     clicked = true;
-                }else {
+                } else {
                     addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
                     clicked = false;
                 }
@@ -110,7 +110,8 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         countriesTv = view.findViewById(R.id.countriesTv);
         addToFavoriteBtn = view.findViewById(R.id.addToFavoriteBtn);
     }
-    private void hideUi(){
+
+    private void hideUi() {
         mealImage.setVisibility(View.INVISIBLE);
         mealName.setVisibility(View.INVISIBLE);
         categoriesRv.setVisibility(View.INVISIBLE);
@@ -118,7 +119,8 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         categoriesTv.setVisibility(View.INVISIBLE);
         countriesTv.setVisibility(View.INVISIBLE);
     }
-    private void showUi(){
+
+    private void showUi() {
         mealImage.setVisibility(View.VISIBLE);
         mealName.setVisibility(View.VISIBLE);
         categoriesRv.setVisibility(View.VISIBLE);
@@ -136,6 +138,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_broken_image)
                 .into(mealImage);
+        showUi();
     }
 
     @Override
@@ -144,14 +147,13 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         Toast.makeText(getContext(), "No Connection", Toast.LENGTH_SHORT).show();
         loading.pauseAnimation();
         loading.setVisibility(View.GONE);
-        showUi();
     }
 
     @Override
     public void showCategoriesList(List<CategoryPojo> categories) {
         Log.i(TAG, categories.toString());
+        categories.remove(categories.get(6));
         categoriesAdapter.setCategories(categories);
-
     }
 
     @Override
@@ -159,7 +161,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         areasAdapter.setAreas(areas);
         loading.pauseAnimation();
         loading.setVisibility(View.GONE);
-        showUi();
     }
 
     @Override

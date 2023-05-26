@@ -21,4 +21,9 @@
         android:background="@drawable/text_back"
         android:icon="@drawable/ic_baseline_calendar_today_24"
         android:title="@string/calender" />
+    <item
+        android:id="@+id/profileFragment"
+        android:background="@drawable/text_back"
+        android:icon="@drawable/ic_profile_24"
+        android:title="@string/profile" />
 </menu>

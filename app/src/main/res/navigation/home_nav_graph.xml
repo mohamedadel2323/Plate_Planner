@@ -25,4 +25,9 @@
         android:name="com.example.plateplanner.homeactivity.view.CalenderFragment"
         android:label="fragment_calender"
         tools:layout="@layout/fragment_calender" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.plateplanner.homeactivity.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

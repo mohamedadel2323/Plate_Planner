@@ -15,4 +15,6 @@
     <color name="heart_back">#85FFFFFF</color>
     <color name="item_color">#DDDAD4</color>
     <color name="status_bar">#22FFFFFF</color>
+    <color name="radio_color">#366B737A</color>
+    <color name="stroke_color">#6D000000</color>
 </resources>
