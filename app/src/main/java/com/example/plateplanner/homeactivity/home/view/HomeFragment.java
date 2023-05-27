@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +31,7 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,10 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
     RecyclerAdapter areasAdapter;
     ImageButton addToFavoriteBtn;
     LottieAnimationView loading;
+    CardView dailyMealCard;
     boolean clicked = false;
+
+    MealPojo dailyMeal;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,19 +78,8 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         homeFragmentPresenter = new HomeFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance()));
         initUi(view);
         hideUi();
-
-        addToFavoriteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!clicked) {
-                    addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
-                    clicked = true;
-                } else {
-                    addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
-                    clicked = false;
-                }
-            }
-        });
+        clickListeners();
+        //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -101,6 +96,28 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         homeFragmentPresenter.getCountries();
     }
 
+    private void clickListeners() {
+        addToFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!clicked) {
+                    addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
+                    clicked = true;
+                } else {
+                    addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
+                    clicked = false;
+                }
+            }
+        });
+
+        dailyMealCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(dailyMeal));
+            }
+        });
+    }
+
     private void initUi(View view) {
         mealImage = view.findViewById(R.id.dailyMealIv);
         mealName = view.findViewById(R.id.dailyMealTv);
@@ -110,18 +127,21 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         categoriesTv = view.findViewById(R.id.categoriesTv);
         countriesTv = view.findViewById(R.id.countriesTv);
         addToFavoriteBtn = view.findViewById(R.id.addToFavoriteBtn);
+        dailyMealCard = view.findViewById(R.id.dailyInspirationCard);
     }
 
     private void hideUi() {
-        mealImage.setVisibility(View.INVISIBLE);
-        mealName.setVisibility(View.INVISIBLE);
-        categoriesRv.setVisibility(View.INVISIBLE);
-        countriesRv.setVisibility(View.INVISIBLE);
-        categoriesTv.setVisibility(View.INVISIBLE);
-        countriesTv.setVisibility(View.INVISIBLE);
+        dailyMealCard.setVisibility(View.GONE);
+        mealImage.setVisibility(View.GONE);
+        mealName.setVisibility(View.GONE);
+        categoriesRv.setVisibility(View.GONE);
+        countriesRv.setVisibility(View.GONE);
+        categoriesTv.setVisibility(View.GONE);
+        countriesTv.setVisibility(View.GONE);
     }
 
     private void showUi() {
+        dailyMealCard.setVisibility(View.VISIBLE);
         mealImage.setVisibility(View.VISIBLE);
         mealName.setVisibility(View.VISIBLE);
         categoriesRv.setVisibility(View.VISIBLE);
@@ -132,6 +152,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
     @Override
     public void showDailyInspiration(MealPojo mealPojo) {
+        dailyMeal = mealPojo;
         Log.e(TAG, mealPojo.toString());
         mealName.setText(mealPojo.getMealName());
         Glide.with(getContext())

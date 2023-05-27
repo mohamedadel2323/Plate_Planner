@@ -60,7 +60,7 @@
                     android:id="@+id/dailyMealIv"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toTopOf="@+id/dailyMealTv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +140,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/countriesTv"
-            tools:listitem="@layout/category_custom_item" />
+            tools:listitem="@layout/country_custom_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
