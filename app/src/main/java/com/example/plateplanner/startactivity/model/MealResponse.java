@@ -2,10 +2,10 @@ package com.example.plateplanner.startactivity.model;
 
 import java.util.List;
 
-public class RandomResponse {
+public class MealResponse {
     private List<MealPojo> meals;
 
-    public RandomResponse(List<MealPojo> meals) {
+    public MealResponse(List<MealPojo> meals) {
         this.meals = meals;
     }
 

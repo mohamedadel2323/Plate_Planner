@@ -68,7 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             if (mode == 0) {
                 image = itemView.findViewById(R.id.image);
                 title = itemView.findViewById(R.id.title);
-                card = itemView.findViewById(R.id.card);
+                card = itemView.findViewById(R.id.categoryCard);
             } else {
                 countryTitle = itemView.findViewById(R.id.countryTitle);
                 countryCard = itemView.findViewById(R.id.countryCard);

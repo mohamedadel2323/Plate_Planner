@@ -4,6 +4,7 @@ import com.example.plateplanner.network.FirebaseDelegate;
 import com.example.plateplanner.network.FirebaseSource;
 import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.network.RemoteSource;
+import com.example.plateplanner.network.SearchNetworkDelegate;
 
 public class Repository implements RepositoryInterface {
     private static Repository repository = null;
@@ -57,6 +58,30 @@ public class Repository implements RepositoryInterface {
     @Override
     public void getAreas(NetworkDelegate networkDelegate) {
         remoteSource.getAreas(networkDelegate);
+    }
+
+    @Override
+    public void searchByLetter(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        remoteSource.searchByLetter(searchQuery , networkDelegate);
+    }
+    @Override
+    public void searchByName(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        remoteSource.searchByName(searchQuery , networkDelegate);
+    }
+
+    @Override
+    public void filterByCategory(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        remoteSource.filterByCategory(filterQuery , networkDelegate);
+    }
+
+    @Override
+    public void filterByCountry(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        remoteSource.filterByCountry(filterQuery , networkDelegate);
+    }
+
+    @Override
+    public void filterByIngredient(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        remoteSource.filterByIngredient(filterQuery , networkDelegate);
     }
 
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
+import com.example.plateplanner.homeactivity.details.model.Ingredient;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -45,7 +46,7 @@ public class DetailsFragment extends Fragment {
     ImageButton backBtn;
     RecyclerView ingredientRv;
     YouTubePlayerView playerView;
-    ArrayList<String> ingredientList = new ArrayList<>();
+    ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
 
     public DetailsFragment() {
@@ -96,67 +97,67 @@ public class DetailsFragment extends Fragment {
         Log.e(TAG, mealPojo.toString());
     }
 
-    private ArrayList<String> createIngredientList(MealPojo mealPojo) {
-        ArrayList<String> ingredientList = new ArrayList<>();
+    private ArrayList<Ingredient> createIngredientList(MealPojo mealPojo) {
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
         if (!mealPojo.getStrIngredient1().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient1());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient1(), mealPojo.getStrMeasure1()));
         }
         if (!mealPojo.getStrIngredient2().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient2());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient2(), mealPojo.getStrMeasure2()));
         }
         if (!mealPojo.getStrIngredient3().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient3());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient3(), mealPojo.getStrMeasure3()));
         }
         if (!mealPojo.getStrIngredient4().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient4());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient4(), mealPojo.getStrMeasure4()));
         }
         if (!mealPojo.getStrIngredient5().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient5());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient5(), mealPojo.getStrMeasure5()));
         }
         if (!mealPojo.getStrIngredient6().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient6());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient6(), mealPojo.getStrMeasure6()));
         }
         if (!mealPojo.getStrIngredient7().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient7());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient7(), mealPojo.getStrMeasure7()));
         }
         if (!mealPojo.getStrIngredient8().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient8());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient8(), mealPojo.getStrMeasure8()));
         }
         if (!mealPojo.getStrIngredient9().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient9());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient9(), mealPojo.getStrMeasure9()));
         }
         if (!mealPojo.getStrIngredient10().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient10());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient10(), mealPojo.getStrMeasure10()));
         }
         if (!mealPojo.getStrIngredient11().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient11());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient11(), mealPojo.getStrMeasure11()));
         }
         if (!mealPojo.getStrIngredient12().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient12());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient12(), mealPojo.getStrMeasure12()));
         }
         if (!mealPojo.getStrIngredient13().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient13());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient13(), mealPojo.getStrMeasure13()));
         }
         if (!mealPojo.getStrIngredient14().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient14());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient14(), mealPojo.getStrMeasure14()));
         }
         if (!mealPojo.getStrIngredient15().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient15());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient15(), mealPojo.getStrMeasure15()));
         }
         if (!mealPojo.getStrIngredient16().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient16());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient16(), mealPojo.getStrMeasure16()));
         }
         if (!mealPojo.getStrIngredient17().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient17());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient17(), mealPojo.getStrMeasure17()));
         }
         if (!mealPojo.getStrIngredient18().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient18());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient18(), mealPojo.getStrMeasure18()));
         }
         if (!mealPojo.getStrIngredient19().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient19());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient19(), mealPojo.getStrMeasure19()));
         }
         if (!mealPojo.getStrIngredient20().isEmpty()) {
-            ingredientList.add(mealPojo.getStrIngredient20());
+            ingredientList.add(new Ingredient(mealPojo.getStrIngredient20(), mealPojo.getStrMeasure20()));
         }
         return ingredientList;
     }

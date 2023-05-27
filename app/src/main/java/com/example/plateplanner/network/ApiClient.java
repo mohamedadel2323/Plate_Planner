@@ -4,11 +4,9 @@ import android.util.Log;
 
 import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.CategoryResponse;
-import com.example.plateplanner.startactivity.model.RandomResponse;
+import com.example.plateplanner.startactivity.model.MealResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,19 +38,18 @@ public class ApiClient implements RemoteSource {
     }
 
     public void startRandomMealCall(NetworkDelegate networkDelegate) {
-        Call<RandomResponse> meals = apiService.getDailyInspiration();
-        Callback responseCallback = new Callback<RandomResponse>() {
-
+        Call<MealResponse> meals = apiService.getDailyInspiration();
+        Callback responseCallback = new Callback<MealResponse>() {
 
             @Override
-            public void onResponse(Call<RandomResponse> call, retrofit2.Response<RandomResponse> response) {
+            public void onResponse(Call<MealResponse> call, retrofit2.Response<MealResponse> response) {
                 if (response.isSuccessful()) {
                     networkDelegate.onSuccessResult(response.body().getMeals().get(0));
                 }
             }
 
             @Override
-            public void onFailure(Call<RandomResponse> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
                 networkDelegate.onFailureResult(t.getLocalizedMessage());
             }
         };
@@ -67,7 +64,6 @@ public class ApiClient implements RemoteSource {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.e(TAG, response.body().getMealCategories().size() + "");
                     networkDelegate.onCategorySuccessResult(response.body().getMealCategories());
                 }
             }
@@ -87,7 +83,6 @@ public class ApiClient implements RemoteSource {
             @Override
             public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "call success");
                     networkDelegate.onAreaSuccessResult(response.body().getMeals());
                 }
             }
@@ -99,6 +94,82 @@ public class ApiClient implements RemoteSource {
             }
         };
         areas.enqueue(responseCallback);
+    }
+
+    public void startSearchCall(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.search(searchQuery);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkDelegate.onSearchSuccess(response.body().getMeals());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                Log.e(TAG, t.toString() );
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void startSearchByNameCall(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.searchByName(searchQuery);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkDelegate.onSearchSuccess(response.body().getMeals());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void startFilterByCategory(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.filterByCategory(filterQuery);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkDelegate.onSearchSuccess(response.body().getMeals());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void startFilterByCountry(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.filterByArea(filterQuery);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkDelegate.onSearchSuccess(response.body().getMeals());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void startFilterByIngredient(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.filterByIngredient(filterQuery);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                networkDelegate.onSearchSuccess(response.body().getMeals());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
     }
 
     @Override
@@ -115,4 +186,30 @@ public class ApiClient implements RemoteSource {
     public void getAreas(NetworkDelegate networkDelegate) {
         ApiClient.apiClient.startGetAreasCall(networkDelegate);
     }
+
+    @Override
+    public void searchByLetter(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startSearchCall(searchQuery, networkDelegate);
+    }
+
+    @Override
+    public void searchByName(String searchQuery, SearchNetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startSearchByNameCall(searchQuery, networkDelegate);
+    }
+
+    @Override
+    public void filterByCategory(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startFilterByCategory(filterQuery, networkDelegate);
+    }
+
+    @Override
+    public void filterByCountry(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startFilterByCountry(filterQuery, networkDelegate);
+    }
+
+    @Override
+    public void filterByIngredient(String filterQuery, SearchNetworkDelegate networkDelegate) {
+        startFilterByIngredient(filterQuery , networkDelegate);
+    }
+
 }

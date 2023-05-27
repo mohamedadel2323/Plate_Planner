@@ -12,31 +12,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
+import com.example.plateplanner.homeactivity.details.model.Ingredient;
 
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
     public final String TAG = "IngredientsAdapter";
     Context context;
-    List<String> ingredients;
+    List<Ingredient> ingredients;
 
-    public IngredientsAdapter(Context context, List<String> ingredients) {
+    public IngredientsAdapter(Context context, List<Ingredient> ingredients) {
         this.context = context;
         this.ingredients = ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
         this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
+        private TextView measure;
         private ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.ingredientTitle);
+            measure = itemView.findViewById(R.id.measure);
             image = itemView.findViewById(R.id.ingredientImage);
         }
     }
@@ -51,9 +54,10 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(ingredients.get(position));
+        holder.title.setText(ingredients.get(position).getIngredientName());
+        holder.measure.setText(ingredients.get(position).getIngredientMeasure());
         Glide.with(context)
-                .load("https://www.themealdb.com/images/ingredients/"+ingredients.get(position)+".png")
+                .load("https://www.themealdb.com/images/ingredients/"+ingredients.get(position).getIngredientName()+".png")
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_broken_image)
                 .into(holder.image);
