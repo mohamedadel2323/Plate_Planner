@@ -97,15 +97,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            if (mode == 2) {
-//                image = itemView.findViewById(R.id.ingredientImage);
-//                title = itemView.findViewById(R.id.ingredientTitle);
-//                card = itemView.findViewById(R.id.ingredientCard);
-            } else {
-                image = itemView.findViewById(R.id.image);
-                title = itemView.findViewById(R.id.title);
-                card = itemView.findViewById(R.id.categoryCard);
-            }
+
+            image = itemView.findViewById(R.id.image);
+            title = itemView.findViewById(R.id.title);
+            card = itemView.findViewById(R.id.categoryCard);
+
         }
     }
 
@@ -114,11 +110,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (mode == 2) {
-            v = inflater.inflate(R.layout.ingredient_custom_item, parent, false);
-        } else {
-            v = inflater.inflate(R.layout.category_custom_item, parent, false);
-        }
+
+
+        v = inflater.inflate(R.layout.category_custom_item, parent, false);
+
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -156,7 +151,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 }
             });
         } else if (mode == 2) {
-
+            holder.title.setText(countries.get(position).getStrArea());
+            Glide.with(context)
+                    .load(R.drawable.ares)
+                    .placeholder(R.drawable.loading_img)
+                    .error(R.drawable.ic_broken_image)
+                    .into(holder.image);
+            holder.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    countryListener.oncCountryClick(countries.get(holder.getAdapterPosition()));
+                }
+            });
         } else if (mode == 3) {
             holder.title.setText(ingredients.get(position).getStrIngredient());
             Glide.with(context)

@@ -94,7 +94,7 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate, NetworkDe
 
     @Override
     public void onAreaSuccessResult(List<AreaResponse.AreaPojo> areas) {
-
+        view.showCountriesResult(areas);
     }
 
     @Override
