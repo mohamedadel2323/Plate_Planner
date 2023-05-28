@@ -5,12 +5,13 @@ import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.network.SearchNetworkDelegate;
 import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
+import com.example.plateplanner.startactivity.model.IngredientResponse;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
 
 import java.util.List;
 
-public class SearchFragmentPresenter implements SearchNetworkDelegate , NetworkDelegate {
+public class SearchFragmentPresenter implements SearchNetworkDelegate, NetworkDelegate {
 
     SearchFragmentViewInterface view;
     Repository repository;
@@ -28,6 +29,10 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate , NetworkD
         repository.searchByName(searchQuery, this);
     }
 
+    public void getMealById(int mealId) {
+        repository.getMealById(mealId, this);
+    }
+
     public void filterByCategory(String searchQuery) {
         repository.filterByCategory(searchQuery, this);
     }
@@ -39,11 +44,17 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate , NetworkD
     public void filterByIngredient(String searchQuery) {
         repository.filterByIngredient(searchQuery, this);
     }
+
     public void getCategories() {
         repository.getCategories(this);
     }
+
     public void getCountries() {
         repository.getAreas(this);
+    }
+
+    public void getIngredients() {
+        repository.getIngredients(this);
     }
 
     @Override
@@ -54,6 +65,11 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate , NetworkD
     @Override
     public void onSearchFailure(String errorMessage) {
         view.showErrorMessage(errorMessage);
+    }
+
+    @Override
+    public void onGetMealByIdSuccess(List<MealPojo> meals) {
+        view.goToDetails(meals);
     }
 
     @Override
@@ -83,6 +99,16 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate , NetworkD
 
     @Override
     public void onAreaFailureResult(String errorMessage) {
+
+    }
+
+    @Override
+    public void onIngredientSuccessResult(List<IngredientResponse.IngredientPojo> ingredients) {
+        view.showIngredientsResult(ingredients);
+    }
+
+    @Override
+    public void onIngredientFailureResult(String errorMessage) {
 
     }
 }

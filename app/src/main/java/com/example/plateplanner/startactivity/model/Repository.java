@@ -61,6 +61,11 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void getIngredients(NetworkDelegate networkDelegate) {
+        remoteSource.getIngredients(networkDelegate);
+    }
+
+    @Override
     public void searchByLetter(String searchQuery, SearchNetworkDelegate networkDelegate) {
         remoteSource.searchByLetter(searchQuery , networkDelegate);
     }
@@ -82,6 +87,11 @@ public class Repository implements RepositoryInterface {
     @Override
     public void filterByIngredient(String filterQuery, SearchNetworkDelegate networkDelegate) {
         remoteSource.filterByIngredient(filterQuery , networkDelegate);
+    }
+
+    @Override
+    public void getMealById(int mealId, SearchNetworkDelegate networkDelegate) {
+        remoteSource.getMealById(mealId , networkDelegate);
     }
 
 }

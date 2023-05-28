@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.CategoryResponse;
+import com.example.plateplanner.startactivity.model.IngredientResponse;
 import com.example.plateplanner.startactivity.model.MealResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -96,17 +97,38 @@ public class ApiClient implements RemoteSource {
         areas.enqueue(responseCallback);
     }
 
+    public void startGetIngredient(NetworkDelegate networkDelegate) {
+        Call<IngredientResponse> meals = apiService.getIngredients();
+        meals.enqueue(new Callback<IngredientResponse>() {
+
+            @Override
+            public void onResponse(Call<IngredientResponse> call, Response<IngredientResponse> response) {
+                if (response.isSuccessful()) {
+                    networkDelegate.onIngredientSuccessResult(response.body().getMeals());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<IngredientResponse> call, Throwable t) {
+                    networkDelegate.onIngredientFailureResult(t.getLocalizedMessage());
+            }
+        });
+    }
+
     public void startSearchCall(String searchQuery, SearchNetworkDelegate networkDelegate) {
         Call<MealResponse> meals = apiService.search(searchQuery);
         meals.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkDelegate.onSearchSuccess(response.body().getMeals());
+                if (response.isSuccessful()) {
+                    networkDelegate.onSearchSuccess(response.body().getMeals());
+
+                }
             }
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
-                Log.e(TAG, t.toString() );
+                Log.e(TAG, t.toString());
                 networkDelegate.onSearchFailure(t.getLocalizedMessage());
             }
         });
@@ -117,7 +139,9 @@ public class ApiClient implements RemoteSource {
         meals.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkDelegate.onSearchSuccess(response.body().getMeals());
+                if (response.isSuccessful()) {
+                    networkDelegate.onSearchSuccess(response.body().getMeals());
+                }
             }
 
             @Override
@@ -132,7 +156,9 @@ public class ApiClient implements RemoteSource {
         meals.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkDelegate.onSearchSuccess(response.body().getMeals());
+                if (response.isSuccessful()) {
+                    networkDelegate.onSearchSuccess(response.body().getMeals());
+                }
             }
 
             @Override
@@ -147,7 +173,9 @@ public class ApiClient implements RemoteSource {
         meals.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkDelegate.onSearchSuccess(response.body().getMeals());
+                if (response.isSuccessful()) {
+                    networkDelegate.onSearchSuccess(response.body().getMeals());
+                }
             }
 
             @Override
@@ -162,7 +190,26 @@ public class ApiClient implements RemoteSource {
         meals.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkDelegate.onSearchSuccess(response.body().getMeals());
+                if (response.isSuccessful()) {
+                    networkDelegate.onSearchSuccess(response.body().getMeals());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                networkDelegate.onSearchFailure(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void startGetMealById(int mealId, SearchNetworkDelegate networkDelegate) {
+        Call<MealResponse> meals = apiService.getMealById(mealId);
+        meals.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful()) {
+                    networkDelegate.onGetMealByIdSuccess(response.body().getMeals());
+                }
             }
 
             @Override
@@ -188,6 +235,11 @@ public class ApiClient implements RemoteSource {
     }
 
     @Override
+    public void getIngredients(NetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startGetIngredient(networkDelegate);
+    }
+
+    @Override
     public void searchByLetter(String searchQuery, SearchNetworkDelegate networkDelegate) {
         ApiClient.apiClient.startSearchCall(searchQuery, networkDelegate);
     }
@@ -195,6 +247,11 @@ public class ApiClient implements RemoteSource {
     @Override
     public void searchByName(String searchQuery, SearchNetworkDelegate networkDelegate) {
         ApiClient.apiClient.startSearchByNameCall(searchQuery, networkDelegate);
+    }
+
+    @Override
+    public void getMealById(int mealId, SearchNetworkDelegate networkDelegate) {
+        ApiClient.apiClient.startGetMealById(mealId , networkDelegate);
     }
 
     @Override
@@ -209,7 +266,7 @@ public class ApiClient implements RemoteSource {
 
     @Override
     public void filterByIngredient(String filterQuery, SearchNetworkDelegate networkDelegate) {
-        startFilterByIngredient(filterQuery , networkDelegate);
+        startFilterByIngredient(filterQuery, networkDelegate);
     }
 
 }

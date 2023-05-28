@@ -2,6 +2,7 @@ package com.example.plateplanner.network;
 
 import com.example.plateplanner.startactivity.model.AreaResponse;
 import com.example.plateplanner.startactivity.model.CategoryResponse;
+import com.example.plateplanner.startactivity.model.IngredientResponse;
 import com.example.plateplanner.startactivity.model.MealResponse;
 
 import retrofit2.Call;
@@ -18,6 +19,9 @@ public interface ApiService {
     @GET("list.php?a=list")
     Call<AreaResponse> getAreas();
 
+    @GET("list.php?i=list")
+    Call<IngredientResponse> getIngredients();
+
     @GET("search.php/meals")
     Call<MealResponse> search(@Query("f") String searchQuery);
 
@@ -32,4 +36,7 @@ public interface ApiService {
 
     @GET("filter.php/meals")
     Call<MealResponse> filterByIngredient(@Query("i") String filterQuery);
+
+    @GET("lookup.php/meals")
+    Call<MealResponse> getMealById(@Query("i") int mealId);
 }

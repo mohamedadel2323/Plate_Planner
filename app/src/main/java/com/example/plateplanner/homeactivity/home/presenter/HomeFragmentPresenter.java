@@ -4,6 +4,7 @@ import com.example.plateplanner.homeactivity.home.view.HomeFragmentViewInterface
 import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
+import com.example.plateplanner.startactivity.model.IngredientResponse;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
 
@@ -59,5 +60,15 @@ public class HomeFragmentPresenter implements NetworkDelegate {
     @Override
     public void onAreaFailureResult(String errorMessage) {
         view.showConnectionError(errorMessage);
+    }
+
+    @Override
+    public void onIngredientSuccessResult(List<IngredientResponse.IngredientPojo> ingredients) {
+
+    }
+
+    @Override
+    public void onIngredientFailureResult(String errorMessage) {
+
     }
 }
