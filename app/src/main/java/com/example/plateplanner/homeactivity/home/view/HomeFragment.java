@@ -23,7 +23,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
 import com.example.plateplanner.homeactivity.home.presenter.HomeFragmentPresenter;
-import com.example.plateplanner.homeactivity.view.RecyclerAdapter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
@@ -31,7 +30,6 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,11 +185,18 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
     @Override
     public void onCountryClick(CategoryPojo category) {
-        Toast.makeText(getContext(), category.getStrCategory(), Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putString("filter" , category.getStrCategory());
+        bundle.putInt("mode" , 0);
+        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment , bundle);
     }
 
     @Override
     public void onAreaClick(AreaPojo area) {
-        Toast.makeText(getContext(), area.getStrArea(), Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putString("filter" , area.getStrArea());
+        bundle.putInt("mode" , 1);
+        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment , bundle);
+
     }
 }

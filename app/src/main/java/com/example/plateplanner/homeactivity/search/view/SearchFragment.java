@@ -68,6 +68,7 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance()));
         mealsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.MEALS);
         categorySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.CATEGORIES);
@@ -78,6 +79,25 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         initUi(view);
         mealsRecyclerView.setAdapter(mealsSearchAdapter);
         listeners();
+
+        int mode = -1;
+        String filter = "";
+        filter = getArguments().getString("filter");
+        mode = getArguments().getInt("mode");
+
+        if (!filter.isEmpty()){
+            if (mode == 0){
+                mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+                searchFragmentPresenter.filterByCategory(filter);
+
+            }else if (mode == 1){
+                Log.i("filter", filter);
+                mealsRecyclerView.swapAdapter(mealsSearchAdapter , true);
+                searchFragmentPresenter.filterByCountry(filter);
+                mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+            }
+        }
+
 
     }
 
