@@ -39,7 +39,11 @@
         android:id="@+id/calenderFragment"
         android:name="com.example.plateplanner.homeactivity.calender.view.CalenderFragment"
         android:label="fragment_calender"
-        tools:layout="@layout/fragment_calender" />
+        tools:layout="@layout/fragment_calender" >
+        <action
+            android:id="@+id/action_calenderFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.plateplanner.homeactivity.profile.view.ProfileFragment"

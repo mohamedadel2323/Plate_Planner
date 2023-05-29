@@ -34,6 +34,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class SearchFragment extends Fragment implements SearchFragmentViewInterface, SearchAdapter.OnMealCardClickListener, SearchAdapter.OnCategoryCardClickListener, SearchAdapter.OnCountryCardClickListener, SearchAdapter.OnIngredientCardClickListener {
     private final String TAG = "SearchFragment";
@@ -49,6 +56,8 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     ArrayList<CategoryPojo> categories = new ArrayList<>();
     ArrayList<AreaResponse.AreaPojo> countries = new ArrayList<>();
     ArrayList<IngredientResponse.IngredientPojo> ingredients = new ArrayList<>();
+    ArrayList<IngredientResponse.IngredientPojo> searchIngredients = new ArrayList<>();
+    Disposable ingredientSearch;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -71,7 +80,7 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
+        searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         mealsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.MEALS);
         categorySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.CATEGORIES);
         countrySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.COUNTRIES);
@@ -88,24 +97,23 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         int mode = -1;
         String filter = "";
         Bundle args = getArguments();
-        if (args != null){
+        if (args != null) {
             filter = args.getString("filter");
             mode = args.getInt("mode");
 
-            if (!filter.isEmpty()){
-                if (mode == 0){
+            if (!filter.isEmpty()) {
+                if (mode == 0) {
                     mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
                     searchFragmentPresenter.filterByCategory(filter);
 
-                }else if (mode == 1){
+                } else if (mode == 1) {
                     Log.i("filter", filter);
-                    mealsRecyclerView.swapAdapter(mealsSearchAdapter , true);
+                    mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
                     searchFragmentPresenter.filterByCountry(filter);
                     mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
                 }
             }
         }
-
 
 
     }
@@ -138,21 +146,58 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
             }
         });
 
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.categoryRb:
+                        if (ingredientSearch != null){
+                            ingredientSearch.dispose();
+                            ingredientSearch = null;
+                        }
                         mealsRecyclerView.swapAdapter(categorySearchAdapter, true);
                         searchFragmentPresenter.getCategories();
                         break;
                     case R.id.CountryRb:
+                        if (ingredientSearch != null){
+                            ingredientSearch.dispose();
+                            ingredientSearch = null;
+                        }
                         mealsRecyclerView.swapAdapter(countrySearchAdapter, true);
                         searchFragmentPresenter.getCountries();
                         break;
                     case R.id.ingredientRb:
                         mealsRecyclerView.swapAdapter(ingredientsSearchAdapter, true);
                         searchFragmentPresenter.getIngredients();
+                        ingredientSearch = Observable.create(new ObservableOnSubscribe<String>() {
+                                    @Override
+                                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                            @Override
+                                            public boolean onQueryTextSubmit(String query) {
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onQueryTextChange(String newText) {
+                                                emitter.onNext(newText);
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                }).debounce(2, TimeUnit.SECONDS)
+                                .subscribe(term -> {
+                                    Observable.fromIterable(ingredients)
+                                            .subscribeOn(AndroidSchedulers.mainThread())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .filter(s -> s.getStrIngredient().toLowerCase().contains(term.toLowerCase()))
+                                            .subscribe(s -> {
+                                                searchIngredients.add(s);
+                                                ingredientsSearchAdapter.setIngredients(searchIngredients);
+                                            });
+                                    searchIngredients.clear();
+                                });
                         break;
                 }
             }
@@ -188,14 +233,14 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     }
 
     @Override
-    public void goToDetails(List<MealPojo> mealPojoList ) {
+    public void goToDetails(List<MealPojo> mealPojoList) {
         //todo change false value with accurate one.
         Navigation.findNavController(getView()).navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(mealPojoList.get(0)));
     }
 
     @Override
     public void onMealClick(MealPojo meal) {
-        Log.i(TAG, meal.toString()+"hewewewewewe");
+        Log.i(TAG, meal.toString() + "hewewewewewe");
         searchFragmentPresenter.getMealById(Integer.parseInt(meal.getIdMeal()));
     }
 

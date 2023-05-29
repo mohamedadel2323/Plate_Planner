@@ -39,4 +39,9 @@ public interface RepositoryInterface {
     public LiveData<Boolean> checkExistence(String mealId);
 
 
+    void addToPlan(PlanMeal planMeal);
+
+    void removeFromPlan(PlanMeal planMeal);
+
+    LiveData<List<PlanMeal>> getPlanMealsByDay(String day);
 }

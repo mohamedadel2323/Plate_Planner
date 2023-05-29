@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.homeactivity.details.view.DetailsFragmentViewInterface;
 import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.startactivity.model.PlanMeal;
 import com.example.plateplanner.startactivity.model.Repository;
 
 public class DetailsFragmentPresenter {
@@ -22,5 +23,8 @@ public class DetailsFragmentPresenter {
     }
     public LiveData<Boolean> checkExistence(String mealId){
        return repository.checkExistence(mealId);
+    }
+    public void addToPlan(PlanMeal meal){
+        repository.addToPlan(meal);
     }
 }

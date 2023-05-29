@@ -1,5 +1,7 @@
 package com.example.plateplanner.homeactivity.details.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,25 +15,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
+import com.example.plateplanner.homeactivity.calender.view.CalenderFragment;
 import com.example.plateplanner.homeactivity.details.model.Ingredient;
 import com.example.plateplanner.homeactivity.details.presenter.DetailsFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.startactivity.model.PlanMeal;
 import com.example.plateplanner.startactivity.model.Repository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,14 +61,15 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
     TextView mealCountry;
     TextView steps;
     ImageButton favoriteBtn;
-    ImageButton calenderBtn;
+    ImageButton addToPlanBtn;
     ImageButton backBtn;
     RecyclerView ingredientRv;
     YouTubePlayerView playerView;
     ArrayList<Ingredient> ingredientList = new ArrayList<>();
     boolean state = false;
     DetailsFragmentPresenter detailsFragmentPresenter;
-
+    private int mSelectedIndex = 0;
+    private PlanMeal planMeal;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -82,6 +95,7 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         detailsFragmentPresenter = new DetailsFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         DetailsFragmentArgs detailsFragmentArgs = DetailsFragmentArgs.fromBundle(getArguments());
         mealPojo = detailsFragmentArgs.getMeal();
+        planMeal = new PlanMeal(mealPojo.getIdMeal() , mealPojo.getMealName() , mealPojo.getStrDrinkAlternate() , mealPojo.getStrCategory() , mealPojo.getStrArea() , mealPojo.getStrInstructions() , mealPojo.getStrMealThumb() , mealPojo.getStrTags() , mealPojo.getStrYoutube() , mealPojo.getStrIngredient1() , mealPojo.getStrIngredient2() , mealPojo.getStrIngredient3() , mealPojo.getStrIngredient4() , mealPojo.getStrIngredient5() , mealPojo.getStrIngredient6() , mealPojo.getStrIngredient7() , mealPojo.getStrIngredient8() , mealPojo.getStrIngredient9() , mealPojo.getStrIngredient10() , mealPojo.getStrIngredient11(), mealPojo.getStrIngredient12() , mealPojo.getStrIngredient13() , mealPojo.getStrIngredient14() , mealPojo.getStrIngredient15() , mealPojo.getStrIngredient16() , mealPojo.getStrIngredient17() , mealPojo.getStrIngredient18() , mealPojo.getStrIngredient19() , mealPojo.getStrIngredient20() , mealPojo.getStrMeasure1() , mealPojo.getStrMeasure2() , mealPojo.getStrMeasure3() , mealPojo.getStrMeasure4() , mealPojo.getStrMeasure5() , mealPojo.getStrMeasure6() , mealPojo.getStrMeasure7() , mealPojo.getStrMeasure8() , mealPojo.getStrMeasure9() , mealPojo.getStrMeasure10() ,mealPojo.getStrMeasure11() , mealPojo.getStrMeasure12() , mealPojo.getStrMeasure13() , mealPojo.getStrMeasure14() , mealPojo.getStrMeasure15() , mealPojo.getStrMeasure16() , mealPojo.getStrMeasure17() , mealPojo.getStrMeasure18() , mealPojo.getStrMeasure19() , mealPojo.getStrMeasure20() , mealPojo.getStrSource() , mealPojo.getStrImageSource() , mealPojo.getStrCreativeCommonsConfirmed() , mealPojo.getDateModified() , "");
 
         initUi(view);
         detailsFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -185,7 +199,7 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         mealCountry = view.findViewById(R.id.mealCountryTv);
         steps = view.findViewById(R.id.stepsTv);
         favoriteBtn = view.findViewById(R.id.addToFavoriteDetailsBtn);
-        calenderBtn = view.findViewById(R.id.addToPlanBtn);
+        addToPlanBtn = view.findViewById(R.id.addToPlanBtn);
         playerView = view.findViewById(R.id.videoPlayer);
         backBtn = view.findViewById(R.id.detailsBackButton);
         ingredientRv = view.findViewById(R.id.ingredientRv);
@@ -193,7 +207,6 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         ingredientList = createIngredientList(mealPojo);
 
         IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(getContext(), ingredientList);
-
         ingredientRv.setAdapter(ingredientsAdapter);
 
         listeners();
@@ -232,6 +245,10 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
             }
         });
 
+        addToPlanBtn.setOnClickListener(view -> {
+            showDialog();
+        });
+
     }
 
     public static String extractVideoIdFromUrl(String url) {
@@ -261,5 +278,39 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
     @Override
     public void removeMealFromFavorites(MealPojo mealPojo) {
         detailsFragmentPresenter.removeMealFromFavourites(mealPojo);
+    }
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Select a day of the week");
+        List<String> daysOfWeek = new ArrayList<>(Arrays.asList("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, daysOfWeek);
+        builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Remember the selected index
+                mSelectedIndex = which;
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // OK button clicked, do something with the selected day of the week
+                if (mSelectedIndex >= 0) {
+                    String selectedDay = daysOfWeek.get(mSelectedIndex);
+                    // Do something with the selected day of the week
+                    Toast.makeText(getContext() , selectedDay , Toast.LENGTH_SHORT).show();
+                    planMeal.setDay(selectedDay);
+                    detailsFragmentPresenter.addToPlan(planMeal);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Cancel button clicked, do nothing
+            }
+        });
+        builder.show();
     }
 }

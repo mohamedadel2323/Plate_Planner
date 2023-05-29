@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.startactivity.model.PlanMeal;
 
 import java.util.List;
 
@@ -45,6 +46,11 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
+    public void clearAllMeals() {
+        mealDAO.clearAllMeals();
+    }
+
+    @Override
     public LiveData<List<MealPojo>> getAllMeals() {
         return mealDAO.getAllMeals();
     }
@@ -52,5 +58,33 @@ public class ConcreteLocalSource implements LocalSource {
     @Override
     public LiveData<Boolean> checkExistence(String mealId) {
         return mealDAO.checkExistence(mealId);
+    }
+
+    @Override
+    public void insertPlanMeal(PlanMeal planMeal) {
+        new Thread() {
+            public void run() {
+                mealDAO.insertPlanMeal(planMeal);
+            }
+        }.start();
+    }
+
+    @Override
+    public void deletePlanMeal(PlanMeal planMeal) {
+        new Thread() {
+            public void run() {
+                mealDAO.deletePlanMeal(planMeal);
+            }
+        }.start();
+    }
+
+    @Override
+    public void clearAllPlanMeals() {
+        mealDAO.clearAllPlanMeals();
+    }
+
+    @Override
+    public LiveData<List<PlanMeal>> getAllPlanMealsByDay(String day) {
+        return mealDAO.getAllPlanMealsByDay(day);
     }
 }
