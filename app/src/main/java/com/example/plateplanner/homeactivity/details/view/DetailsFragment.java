@@ -82,8 +82,6 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         detailsFragmentPresenter = new DetailsFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         DetailsFragmentArgs detailsFragmentArgs = DetailsFragmentArgs.fromBundle(getArguments());
         mealPojo = detailsFragmentArgs.getMeal();
-//        state = false;
-//        state = detailsFragmentArgs.getState();
 
         initUi(view);
         detailsFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -97,11 +95,6 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
                 }
             }
         });
-//        if (state) {
-//            favoriteBtn.setImageResource(R.drawable.solid_heart_icon);
-//        } else {
-//            favoriteBtn.setImageResource(R.drawable.border_heart_icon);
-//        }
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
         if (bottomNavigationView != null) {

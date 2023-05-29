@@ -33,6 +33,9 @@ public interface RepositoryInterface {
     public LiveData<List<MealPojo>>getCachedMeals();
     public void addToFavorites(MealPojo mealPojo);
     public void removeFromFavorites(MealPojo mealPojo);
+
+    LiveData<List<MealPojo>> getAllFavoriteMeals();
+
     public LiveData<Boolean> checkExistence(String mealId);
 
 

@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
     @Override
     public void showDailyInspiration(MealPojo mealPojo) {
         clicked = false;
-        homeFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        homeFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean != null) {

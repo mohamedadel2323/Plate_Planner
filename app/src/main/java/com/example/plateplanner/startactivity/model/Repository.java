@@ -116,6 +116,10 @@ public class Repository implements RepositoryInterface {
     public void removeFromFavorites(MealPojo mealPojo) {
         localSource.deleteMeal(mealPojo);
     }
+    @Override
+    public LiveData<List<MealPojo>> getAllFavoriteMeals() {
+        return localSource.getAllMeals();
+    }
 
     @Override
     public LiveData<Boolean> checkExistence(String mealId) {
