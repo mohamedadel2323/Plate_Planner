@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
+import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.view.HomeActivity;
 import com.example.plateplanner.startactivity.model.AuthModel;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
@@ -65,7 +66,7 @@ public class SignInFragment extends Fragment implements SignInViewInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        signInPresenter = new SignInPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance() , ApiClient.getInstance()));
+        signInPresenter = new SignInPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance() , ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
 
         initUi(view);
 

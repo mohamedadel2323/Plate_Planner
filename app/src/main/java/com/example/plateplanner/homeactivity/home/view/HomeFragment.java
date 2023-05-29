@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
+import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.home.presenter.HomeFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
@@ -73,22 +75,13 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        homeFragmentPresenter = new HomeFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance()));
+        homeFragmentPresenter = new HomeFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         initUi(view);
         hideUi();
         clickListeners();
         //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
-        layoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoriesRv.setLayoutManager(layoutManager);
-        categoriesAdapter = new RecyclerAdapter(getContext(), new ArrayList<CategoryPojo>(), new ArrayList<AreaPojo>(), this, this, 0);
-        areasAdapter = new RecyclerAdapter(getContext(), new ArrayList<CategoryPojo>(), new ArrayList<AreaPojo>(), this, this, 1);
-        categoriesRv.setAdapter(categoriesAdapter);
-        countriesRv.setLayoutManager(layoutManager2);
-        countriesRv.setAdapter(areasAdapter);
+
         homeFragmentPresenter.getDailyInspirationMeal();
         homeFragmentPresenter.getCategories();
         homeFragmentPresenter.getCountries();
@@ -99,9 +92,11 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
             @Override
             public void onClick(View v) {
                 if (!clicked) {
+                    homeFragmentPresenter.addToFavorites(dailyMeal);
                     addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
                     clicked = true;
                 } else {
+                    homeFragmentPresenter.removeFromFavorites(dailyMeal);
                     addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
                     clicked = false;
                 }
@@ -126,6 +121,16 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         countriesTv = view.findViewById(R.id.countriesTv);
         addToFavoriteBtn = view.findViewById(R.id.addToFavoriteBtn);
         dailyMealCard = view.findViewById(R.id.dailyInspirationCard);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+        layoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        categoriesRv.setLayoutManager(layoutManager);
+        categoriesAdapter = new RecyclerAdapter(getContext(), new ArrayList<CategoryPojo>(), new ArrayList<AreaPojo>(), this, this, 0);
+        areasAdapter = new RecyclerAdapter(getContext(), new ArrayList<CategoryPojo>(), new ArrayList<AreaPojo>(), this, this, 1);
+        categoriesRv.setAdapter(categoriesAdapter);
+        countriesRv.setLayoutManager(layoutManager2);
+        countriesRv.setAdapter(areasAdapter);
     }
 
     private void hideUi() {
@@ -150,6 +155,20 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
     @Override
     public void showDailyInspiration(MealPojo mealPojo) {
+        clicked = false;
+        homeFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean != null) {
+                    if (aBoolean.booleanValue()) {
+                        clicked = true;
+                        Log.e(TAG, "onChanged: from observer " + clicked);
+                        addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
+                    }
+                }
+
+            }
+        });
         dailyMeal = mealPojo;
         Log.e(TAG, mealPojo.toString());
         mealName.setText(mealPojo.getMealName());
@@ -186,17 +205,17 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
     @Override
     public void onCountryClick(CategoryPojo category) {
         Bundle bundle = new Bundle();
-        bundle.putString("filter" , category.getStrCategory());
-        bundle.putInt("mode" , 0);
-        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment , bundle);
+        bundle.putString("filter", category.getStrCategory());
+        bundle.putInt("mode", 0);
+        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment, bundle);
     }
 
     @Override
     public void onAreaClick(AreaPojo area) {
         Bundle bundle = new Bundle();
-        bundle.putString("filter" , area.getStrArea());
-        bundle.putInt("mode" , 1);
-        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment , bundle);
+        bundle.putString("filter", area.getStrArea());
+        bundle.putInt("mode", 1);
+        Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_searchFragment, bundle);
 
     }
 }

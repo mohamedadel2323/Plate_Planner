@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import com.example.plateplanner.R;
+import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.details.model.Ingredient;
 import com.example.plateplanner.homeactivity.search.presenter.SearchFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
@@ -28,6 +29,7 @@ import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.IngredientResponse;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,7 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance()));
+        searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
         mealsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.MEALS);
         categorySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.CATEGORIES);
         countrySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.COUNTRIES);
@@ -79,24 +81,31 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         initUi(view);
         mealsRecyclerView.setAdapter(mealsSearchAdapter);
         listeners();
-
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setVisibility(View.GONE);
+        }
         int mode = -1;
         String filter = "";
-        filter = getArguments().getString("filter");
-        mode = getArguments().getInt("mode");
+        Bundle args = getArguments();
+        if (args != null){
+            filter = args.getString("filter");
+            mode = args.getInt("mode");
 
-        if (!filter.isEmpty()){
-            if (mode == 0){
-                mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
-                searchFragmentPresenter.filterByCategory(filter);
+            if (!filter.isEmpty()){
+                if (mode == 0){
+                    mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+                    searchFragmentPresenter.filterByCategory(filter);
 
-            }else if (mode == 1){
-                Log.i("filter", filter);
-                mealsRecyclerView.swapAdapter(mealsSearchAdapter , true);
-                searchFragmentPresenter.filterByCountry(filter);
-                mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+                }else if (mode == 1){
+                    Log.i("filter", filter);
+                    mealsRecyclerView.swapAdapter(mealsSearchAdapter , true);
+                    searchFragmentPresenter.filterByCountry(filter);
+                    mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+                }
             }
         }
+
 
 
     }
@@ -179,7 +188,8 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     }
 
     @Override
-    public void goToDetails(List<MealPojo> mealPojoList) {
+    public void goToDetails(List<MealPojo> mealPojoList ) {
+        //todo change false value with accurate one.
         Navigation.findNavController(getView()).navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(mealPojoList.get(0)));
     }
 
@@ -205,5 +215,14 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     public void onIngredientClick(IngredientResponse.IngredientPojo ingredient) {
         mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
         searchFragmentPresenter.filterByIngredient(ingredient.getStrIngredient());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
     }
 }

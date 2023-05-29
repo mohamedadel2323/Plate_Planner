@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
+import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.view.HomeActivity;
 import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.Repository;
@@ -49,7 +50,7 @@ public class SplashFragment extends Fragment implements SplashViewInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        splashPresenter = new SplashPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()) , FirebaseCalls.getInstance() , ApiClient.getInstance()));
+        splashPresenter = new SplashPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         splashAnimation = view.findViewById(R.id.splashAnimation);
         splashAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -59,11 +60,11 @@ public class SplashFragment extends Fragment implements SplashViewInterface {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                if(getLogStatus()){
-                    intent = new Intent(getActivity() , HomeActivity.class);
+                if (getLogStatus()) {
+                    intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
                     getActivity().finish();
-                }else{
+                } else {
                     Navigation.findNavController(view).navigate(SplashFragmentDirections.actionSplashFragmentToSignInOptionsFragment());
                 }
             }

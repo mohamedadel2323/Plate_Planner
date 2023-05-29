@@ -1,5 +1,7 @@
 package com.example.plateplanner.homeactivity.home.presenter;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.plateplanner.homeactivity.home.view.HomeFragmentViewInterface;
 import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
@@ -29,6 +31,15 @@ public class HomeFragmentPresenter implements NetworkDelegate {
     }
     public void getCountries() {
         repository.getAreas(this);
+    }
+    public void addToFavorites(MealPojo mealPojo){
+        repository.addToFavorites(mealPojo);
+    }
+    public void removeFromFavorites(MealPojo mealPojo){
+        repository.removeFromFavorites(mealPojo);
+    }
+    public LiveData<Boolean> checkExistence(String mealId){
+        return repository.checkExistence(mealId);
     }
 
     @Override

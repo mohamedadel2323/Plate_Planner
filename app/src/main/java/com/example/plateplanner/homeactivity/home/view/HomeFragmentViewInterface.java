@@ -1,5 +1,7 @@
 package com.example.plateplanner.homeactivity.home.view;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.MealPojo;
