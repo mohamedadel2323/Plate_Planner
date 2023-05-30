@@ -3,9 +3,9 @@ package com.example.plateplanner.homeactivity.details.presenter;
 import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.homeactivity.details.view.DetailsFragmentViewInterface;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.PlanMeal;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.PlanMeal;
+import com.example.plateplanner.model.Repository;
 
 public class DetailsFragmentPresenter {
     DetailsFragmentViewInterface view;

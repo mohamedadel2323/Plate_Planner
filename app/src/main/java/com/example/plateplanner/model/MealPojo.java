@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.model;
+package com.example.plateplanner.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,13 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "planMeal")
-public class PlanMeal implements Parcelable {
+import com.google.gson.annotations.SerializedName;
 
-    public PlanMeal() {
+@Entity(tableName = "meals")
+public class MealPojo implements Parcelable {
+    public MealPojo() {
     }
 
-    public PlanMeal(@NonNull String idMeal, String mealName, String strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure11, String strMeasure12, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource, String strImageSource, String strCreativeCommonsConfirmed, String dateModified, String day) {
+    public MealPojo(@NonNull String idMeal, String mealName, String strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure11, String strMeasure12, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource, String strImageSource, String strCreativeCommonsConfirmed, String dateModified) {
         this.idMeal = idMeal;
         this.mealName = mealName;
         this.strDrinkAlternate = strDrinkAlternate;
@@ -67,120 +68,170 @@ public class PlanMeal implements Parcelable {
         this.strImageSource = strImageSource;
         this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
         this.dateModified = dateModified;
-        this.day = day;
     }
 
+    @SerializedName("idMeal")
     @PrimaryKey
     @NonNull
     private String idMeal;
 
+    @SerializedName("strMeal")
     private String mealName;
 
+    @SerializedName("strDrinkAlternate")
     private String strDrinkAlternate;
 
+    @SerializedName("strCategory")
     private String strCategory;
 
+    @SerializedName("strArea")
     private String strArea;
 
+    @SerializedName("strInstructions")
     private String strInstructions;
 
+    @SerializedName("strMealThumb")
     private String strMealThumb;
 
+    @SerializedName("strTags")
     private String strTags;
 
+    @SerializedName("strYoutube")
     private String strYoutube;
 
+    @SerializedName("strIngredient1")
     private String strIngredient1;
 
+    @SerializedName("strIngredient2")
     private String strIngredient2;
 
+    @SerializedName("strIngredient3")
     private String strIngredient3;
 
+    @SerializedName("strIngredient4")
     private String strIngredient4;
 
+    @SerializedName("strIngredient5")
     private String strIngredient5;
 
+    @SerializedName("strIngredient6")
     private String strIngredient6;
 
+    @SerializedName("strIngredient7")
     private String strIngredient7;
 
+    @SerializedName("strIngredient8")
     private String strIngredient8;
 
+    @SerializedName("strIngredient9")
     private String strIngredient9;
 
+    @SerializedName("strIngredient10")
     private String strIngredient10;
 
+    @SerializedName("strIngredient11")
     private String strIngredient11;
 
+    @SerializedName("strIngredient12")
     private String strIngredient12;
 
+    @SerializedName("strIngredient13")
     private String strIngredient13;
 
+    @SerializedName("strIngredient14")
     private String strIngredient14;
 
+    @SerializedName("strIngredient15")
     private String strIngredient15;
 
+    @SerializedName("strIngredient16")
     private String strIngredient16;
 
+    @SerializedName("strIngredient17")
     private String strIngredient17;
 
+    @SerializedName("strIngredient18")
     private String strIngredient18;
 
+    @SerializedName("strIngredient19")
     private String strIngredient19;
 
+    @SerializedName("strIngredient20")
     private String strIngredient20;
 
+    @SerializedName("strMeasure1")
     private String strMeasure1;
 
+    @SerializedName("strMeasure2")
     private String strMeasure2;
 
+    @SerializedName("strMeasure3")
     private String strMeasure3;
 
+    @SerializedName("strMeasure4")
     private String strMeasure4;
 
+    @SerializedName("strMeasure5")
     private String strMeasure5;
 
+    @SerializedName("strMeasure6")
     private String strMeasure6;
 
+    @SerializedName("strMeasure7")
     private String strMeasure7;
 
+    @SerializedName("strMeasure8")
     private String strMeasure8;
 
+    @SerializedName("strMeasure9")
     private String strMeasure9;
 
+    @SerializedName("strMeasure10")
     private String strMeasure10;
 
+    @SerializedName("strMeasure11")
     private String strMeasure11;
 
+    @SerializedName("strMeasure12")
     private String strMeasure12;
 
+    @SerializedName("strMeasure13")
     private String strMeasure13;
 
+    @SerializedName("strMeasure14")
     private String strMeasure14;
 
+    @SerializedName("strMeasure15")
     private String strMeasure15;
 
+    @SerializedName("strMeasure16")
     private String strMeasure16;
 
+    @SerializedName("strMeasure17")
     private String strMeasure17;
 
+    @SerializedName("strMeasure18")
     private String strMeasure18;
 
+    @SerializedName("strMeasure19")
     private String strMeasure19;
 
+    @SerializedName("strMeasure20")
     private String strMeasure20;
 
+    @SerializedName("strSource")
     private String strSource;
 
+    @SerializedName("strImageSource")
     private String strImageSource;
 
+    @SerializedName("strCreativeCommonsConfirmed")
     private String strCreativeCommonsConfirmed;
 
+    @SerializedName("dateModified")
     private String dateModified;
 
-    private String day;
-
-    protected PlanMeal(Parcel in) {
+    protected MealPojo(Parcel in) {
         idMeal = in.readString();
         mealName = in.readString();
         strDrinkAlternate = in.readString();
@@ -234,27 +285,25 @@ public class PlanMeal implements Parcelable {
         strImageSource = in.readString();
         strCreativeCommonsConfirmed = in.readString();
         dateModified = in.readString();
-        day = in.readString();
     }
 
-    public static final Creator<PlanMeal> CREATOR = new Creator<PlanMeal>() {
+    public static final Creator<MealPojo> CREATOR = new Creator<MealPojo>() {
         @Override
-        public PlanMeal createFromParcel(Parcel in) {
-            return new PlanMeal(in);
+        public MealPojo createFromParcel(Parcel in) {
+            return new MealPojo(in);
         }
 
         @Override
-        public PlanMeal[] newArray(int size) {
-            return new PlanMeal[size];
+        public MealPojo[] newArray(int size) {
+            return new MealPojo[size];
         }
     };
 
-    @NonNull
     public String getIdMeal() {
         return idMeal;
     }
 
-    public void setIdMeal(@NonNull String idMeal) {
+    public void setIdMeal(String idMeal) {
         this.idMeal = idMeal;
     }
 
@@ -674,17 +723,9 @@ public class PlanMeal implements Parcelable {
         this.dateModified = dateModified;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
     @Override
     public String toString() {
-        return "PlanMeal{" +
+        return "MealPojo{" +
                 "idMeal='" + idMeal + '\'' +
                 ", mealName='" + mealName + '\'' +
                 ", strDrinkAlternate='" + strDrinkAlternate + '\'' +
@@ -738,7 +779,6 @@ public class PlanMeal implements Parcelable {
                 ", strImageSource='" + strImageSource + '\'' +
                 ", strCreativeCommonsConfirmed='" + strCreativeCommonsConfirmed + '\'' +
                 ", dateModified='" + dateModified + '\'' +
-                ", day='" + day + '\'' +
                 '}';
     }
 
@@ -802,6 +842,5 @@ public class PlanMeal implements Parcelable {
         dest.writeString(strImageSource);
         dest.writeString(strCreativeCommonsConfirmed);
         dest.writeString(dateModified);
-        dest.writeString(day);
     }
 }

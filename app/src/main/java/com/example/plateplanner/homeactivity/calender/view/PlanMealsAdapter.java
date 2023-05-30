@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
-import com.example.plateplanner.homeactivity.favorites.view.FavoritesAdapter;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.PlanMeal;
+import com.example.plateplanner.model.PlanMeal;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.example.plateplanner.homeactivity.details.view;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,24 +17,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
-import com.example.plateplanner.homeactivity.calender.view.CalenderFragment;
 import com.example.plateplanner.homeactivity.details.model.Ingredient;
 import com.example.plateplanner.homeactivity.details.presenter.DetailsFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.PlanMeal;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AuthSharedPreferences;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.PlanMeal;
+import com.example.plateplanner.model.Repository;
 import com.example.plateplanner.startactivity.view.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,7 +40,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;

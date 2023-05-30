@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.PlanMeal;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.PlanMeal;
 
 import java.util.List;
 
@@ -37,6 +37,24 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
+    public void insertFavMealList(List<MealPojo> favMeals) {
+        new Thread() {
+            public void run() {
+                mealDAO.insertFavMealList(favMeals);
+            }
+        }.start();
+    }
+
+    @Override
+    public void insertPlanMealList(List<PlanMeal> planMeals) {
+        new Thread() {
+            public void run() {
+                mealDAO.insertPlanMealList(planMeals);
+            }
+        }.start();
+    }
+
+    @Override
     public void deleteMeal(MealPojo meal) {
         new Thread() {
             public void run() {
@@ -46,8 +64,12 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public void clearAllMeals() {
-        mealDAO.clearAllMeals();
+    public void clearAllFavoriteMeals() {
+        new Thread() {
+            public void run() {
+                mealDAO.clearAllMeals();
+            }
+        }.start();
     }
 
     @Override
@@ -79,8 +101,17 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
+    public LiveData<List<PlanMeal>> getAllPlanMeals() {
+        return mealDAO.getAllPlanMeals();
+    }
+
+    @Override
     public void clearAllPlanMeals() {
-        mealDAO.clearAllPlanMeals();
+        new Thread() {
+            public void run() {
+                mealDAO.clearAllPlanMeals();
+            }
+        }.start();
     }
 
     @Override

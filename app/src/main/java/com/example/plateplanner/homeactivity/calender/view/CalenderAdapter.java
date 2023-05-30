@@ -11,10 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plateplanner.R;
-import com.example.plateplanner.startactivity.model.PlanMeal;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.ViewHolder> {

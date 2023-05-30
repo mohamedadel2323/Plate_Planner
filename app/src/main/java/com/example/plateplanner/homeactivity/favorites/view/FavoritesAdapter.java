@@ -14,8 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.plateplanner.R;
-import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.model.MealPojo;
 
 import java.util.List;
 

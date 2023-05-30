@@ -1,18 +1,22 @@
 package com.example.plateplanner.homeactivity.home.presenter;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.homeactivity.home.view.HomeFragmentViewInterface;
+import com.example.plateplanner.model.PlanMeal;
+import com.example.plateplanner.network.FirebaseDelegate;
 import com.example.plateplanner.network.NetworkDelegate;
-import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AreaResponse.AreaPojo;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.Repository;
 
 import java.util.List;
 
-public class HomeFragmentPresenter implements NetworkDelegate {
+public class HomeFragmentPresenter implements NetworkDelegate , FirebaseDelegate {
     private final String TAG = "HomeFragmentPresenter";
     HomeFragmentViewInterface view;
     Repository repository;
@@ -41,6 +45,11 @@ public class HomeFragmentPresenter implements NetworkDelegate {
     public LiveData<Boolean> checkExistence(String mealId){
         return repository.checkExistence(mealId);
     }
+
+    public void downloadMeals(String email){
+        repository.downloadMeals(email , this);
+    }
+
 
     @Override
     public void onSuccessResult(MealPojo mealPojo) {
@@ -82,4 +91,23 @@ public class HomeFragmentPresenter implements NetworkDelegate {
     public void onIngredientFailureResult(String errorMessage) {
 
     }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
+
+
+    @Override
+    public void onDownloadMealsSuccess(List<MealPojo> favMeals, List<PlanMeal> planMeals) {
+        Log.e(TAG, "onDownloadMealsSuccess: download success " );
+        repository.insertFavMealList(favMeals);
+        repository.insertPlanMealList(planMeals);
+    }
+
 }

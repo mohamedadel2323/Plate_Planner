@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.model;
+package com.example.plateplanner.model;
 
 import androidx.lifecycle.LiveData;
 
@@ -36,6 +36,16 @@ public interface RepositoryInterface {
 
     LiveData<List<MealPojo>> getAllFavoriteMeals();
 
+    void clearAllFavoriteMeals();
+
+    void insertFavMealList(List<MealPojo> favMeals);
+
+    LiveData<List<PlanMeal>> getAllPlanMeals();
+
+    void clearAllPlanMeals();
+
+    void insertPlanMealList(List<PlanMeal> planMeals);
+
     public LiveData<Boolean> checkExistence(String mealId);
 
 
@@ -44,4 +54,8 @@ public interface RepositoryInterface {
     void removeFromPlan(PlanMeal planMeal);
 
     LiveData<List<PlanMeal>> getPlanMealsByDay(String day);
+
+    void uploadMeals(String email, List<PlanMeal> planMeals, List<MealPojo> favMeals, FirebaseDelegate firebaseDelegate);
+
+    void downloadMeals(String email, FirebaseDelegate firebaseDelegate);
 }

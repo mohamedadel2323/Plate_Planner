@@ -1,9 +1,13 @@
 package com.example.plateplanner.startactivity.signin.presenter;
 
-import com.example.plateplanner.startactivity.model.AuthModel;
-import com.example.plateplanner.startactivity.model.RepositoryInterface;
+import com.example.plateplanner.model.AuthModel;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.PlanMeal;
+import com.example.plateplanner.model.RepositoryInterface;
 import com.example.plateplanner.network.FirebaseDelegate;
 import com.example.plateplanner.startactivity.signin.view.SignInViewInterface;
+
+import java.util.List;
 
 public class SignInPresenter implements FirebaseDelegate {
     SignInViewInterface view;
@@ -29,6 +33,12 @@ public class SignInPresenter implements FirebaseDelegate {
     @Override
     public void onFail(String errorMessage) {
         view.onLoginFailed(errorMessage);
+    }
+
+
+    @Override
+    public void onDownloadMealsSuccess(List<MealPojo> favMeals, List<PlanMeal> planMeals) {
+
     }
 
 

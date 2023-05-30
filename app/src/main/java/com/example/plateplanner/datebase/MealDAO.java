@@ -7,8 +7,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.PlanMeal;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.PlanMeal;
 
 import java.util.List;
 @Dao
@@ -23,6 +23,9 @@ public interface MealDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMeal(MealPojo meal);
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertFavMealList(List<MealPojo> favMeals);
+
     @Delete
     void deleteMeal(MealPojo meal);
 
@@ -31,8 +34,11 @@ public interface MealDAO {
 
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPlanMeal(PlanMeal planMeal);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertPlanMealList(List<PlanMeal> planMeals);
 
     @Delete
     void deletePlanMeal(PlanMeal planMeal);
@@ -42,6 +48,9 @@ public interface MealDAO {
 
     @Query("SELECT * FROM planMeal WHERE day = :day")
     LiveData<List<PlanMeal>> getAllPlanMealsByDay(String day);
+
+    @Query("SELECT * FROM planMeal")
+    LiveData<List<PlanMeal>> getAllPlanMeals();
 
 
 }

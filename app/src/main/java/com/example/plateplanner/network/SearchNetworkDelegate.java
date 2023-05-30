@@ -1,7 +1,6 @@
 package com.example.plateplanner.network;
 
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.model.MealPojo;
 
 import java.util.List;
 

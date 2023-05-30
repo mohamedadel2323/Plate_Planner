@@ -19,16 +19,15 @@ import android.widget.SearchView;
 
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
-import com.example.plateplanner.homeactivity.details.model.Ingredient;
 import com.example.plateplanner.homeactivity.search.presenter.SearchFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AreaResponse;
+import com.example.plateplanner.model.AuthSharedPreferences;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.Repository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -234,7 +233,6 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
 
     @Override
     public void goToDetails(List<MealPojo> mealPojoList) {
-        //todo change false value with accurate one.
         Navigation.findNavController(getView()).navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(mealPojoList.get(0)));
     }
 

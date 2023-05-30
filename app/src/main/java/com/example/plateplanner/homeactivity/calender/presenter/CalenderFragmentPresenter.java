@@ -3,8 +3,8 @@ package com.example.plateplanner.homeactivity.calender.presenter;
 import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.homeactivity.calender.view.CalenderFragmentViewInterface;
-import com.example.plateplanner.startactivity.model.PlanMeal;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.PlanMeal;
+import com.example.plateplanner.model.Repository;
 
 import java.util.List;
 

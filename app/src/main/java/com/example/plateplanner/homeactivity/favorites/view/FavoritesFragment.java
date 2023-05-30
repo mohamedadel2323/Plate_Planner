@@ -21,9 +21,9 @@ import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.favorites.presenter.FavoritesFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AuthSharedPreferences;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

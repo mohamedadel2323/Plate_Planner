@@ -2,10 +2,10 @@ package com.example.plateplanner.network;
 
 import android.util.Log;
 
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.CategoryResponse;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealResponse;
+import com.example.plateplanner.model.AreaResponse;
+import com.example.plateplanner.model.CategoryResponse;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -1,9 +1,9 @@
 package com.example.plateplanner.network;
 
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.CategoryResponse;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealResponse;
+import com.example.plateplanner.model.AreaResponse;
+import com.example.plateplanner.model.CategoryResponse;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

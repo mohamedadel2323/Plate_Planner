@@ -28,11 +28,11 @@ import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.home.presenter.HomeFragmentPresenter;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AreaResponse.AreaPojo;
+import com.example.plateplanner.model.AuthSharedPreferences;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.Repository;
 import com.example.plateplanner.startactivity.view.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +43,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeFragmentViewInterface, RecyclerAdapter.OnCountryCardClickListener, RecyclerAdapter.OnAreaCardClickListener {
     private final String TAG = "HomeFragment";
+    private static boolean downloadIndicator = false;
     ImageView mealImage;
     TextView mealName;
     HomeFragmentPresenter homeFragmentPresenter;
@@ -85,7 +86,10 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
         //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
-
+        if (FirebaseAuth.getInstance().getCurrentUser() != null && !downloadIndicator){
+            homeFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            downloadIndicator = true;
+        }
         homeFragmentPresenter.getDailyInspirationMeal();
         homeFragmentPresenter.getCategories();
         homeFragmentPresenter.getCountries();

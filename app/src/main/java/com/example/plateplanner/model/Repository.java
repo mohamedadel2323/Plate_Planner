@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.model;
+package com.example.plateplanner.model;
 
 import androidx.lifecycle.LiveData;
 
@@ -123,6 +123,31 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void clearAllFavoriteMeals() {
+        localSource.clearAllFavoriteMeals();
+    }
+
+    @Override
+    public void insertFavMealList(List<MealPojo> favMeals) {
+        localSource.insertFavMealList(favMeals);
+    }
+
+    @Override
+    public LiveData<List<PlanMeal>> getAllPlanMeals() {
+        return localSource.getAllPlanMeals();
+    }
+
+    @Override
+    public void clearAllPlanMeals() {
+        localSource.clearAllPlanMeals();
+    }
+
+    @Override
+    public void insertPlanMealList(List<PlanMeal> planMeals) {
+        localSource.insertPlanMealList(planMeals);
+    }
+
+    @Override
     public LiveData<Boolean> checkExistence(String mealId) {
         return localSource.checkExistence(mealId);
     }
@@ -140,6 +165,16 @@ public class Repository implements RepositoryInterface {
     @Override
     public LiveData<List<PlanMeal>> getPlanMealsByDay(String day) {
         return localSource.getAllPlanMealsByDay(day);
+    }
+
+
+    @Override
+    public void uploadMeals(String email, List<PlanMeal> planMeals, List<MealPojo> favMeals, FirebaseDelegate firebaseDelegate) {
+        firebaseSource.uploadMeals(email , planMeals , favMeals, firebaseDelegate);
+    }
+    @Override
+    public void downloadMeals(String email, FirebaseDelegate firebaseDelegate) {
+        firebaseSource.downloadMeals(email , firebaseDelegate);
     }
 
 }

@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.plateplanner.R;
-import com.example.plateplanner.homeactivity.details.model.Ingredient;
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.model.AreaResponse;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealPojo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {

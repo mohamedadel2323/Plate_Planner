@@ -1,10 +1,7 @@
 package com.example.plateplanner.homeactivity.favorites.presenter;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.plateplanner.homeactivity.favorites.view.FavoritesFragmentViewInterface;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.Repository;
 
 public class FavoritesFragmentPresenter {
     FavoritesFragmentViewInterface view;

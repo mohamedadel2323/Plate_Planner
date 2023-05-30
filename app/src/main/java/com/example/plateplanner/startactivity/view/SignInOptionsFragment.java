@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.plateplanner.R;
 import com.example.plateplanner.homeactivity.view.HomeActivity;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
+import com.example.plateplanner.model.AuthSharedPreferences;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

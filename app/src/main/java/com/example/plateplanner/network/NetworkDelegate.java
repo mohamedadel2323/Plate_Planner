@@ -1,10 +1,9 @@
 package com.example.plateplanner.network;
 
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.AreaResponse.AreaPojo;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
+import com.example.plateplanner.model.AreaResponse.AreaPojo;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealPojo;
 
 import java.util.List;
 

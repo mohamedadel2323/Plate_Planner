@@ -56,6 +56,6 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="meal"
-            app:argType="com.example.plateplanner.startactivity.model.MealPojo" />
+            app:argType="com.example.plateplanner.model.MealPojo" />
     </fragment>
 </navigation>

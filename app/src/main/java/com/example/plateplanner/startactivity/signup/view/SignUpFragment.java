@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
-import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AuthSharedPreferences;
+import com.example.plateplanner.model.Repository;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.startactivity.signup.presenter.SignUpPresenter;
@@ -27,7 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.regex.Pattern;
 
-import com.example.plateplanner.startactivity.model.AuthModel;
+import com.example.plateplanner.model.AuthModel;
 
 
 public class SignUpFragment extends Fragment implements SignUpViewInterface{

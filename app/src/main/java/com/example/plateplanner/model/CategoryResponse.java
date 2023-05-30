@@ -1,4 +1,4 @@
-package com.example.plateplanner.startactivity.model;
+package com.example.plateplanner.model;
 
 import com.google.gson.annotations.SerializedName;
 

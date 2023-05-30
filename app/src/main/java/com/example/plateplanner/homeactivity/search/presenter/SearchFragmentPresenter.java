@@ -3,11 +3,11 @@ package com.example.plateplanner.homeactivity.search.presenter;
 import com.example.plateplanner.homeactivity.search.view.SearchFragmentViewInterface;
 import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.network.SearchNetworkDelegate;
-import com.example.plateplanner.startactivity.model.AreaResponse;
-import com.example.plateplanner.startactivity.model.CategoryPojo;
-import com.example.plateplanner.startactivity.model.IngredientResponse;
-import com.example.plateplanner.startactivity.model.MealPojo;
-import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.model.AreaResponse;
+import com.example.plateplanner.model.CategoryPojo;
+import com.example.plateplanner.model.IngredientResponse;
+import com.example.plateplanner.model.MealPojo;
+import com.example.plateplanner.model.Repository;
 
 import java.util.List;
 
