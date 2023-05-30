@@ -32,7 +32,11 @@
         android:id="@+id/signInFragment"
         android:name="com.example.plateplanner.startactivity.signin.view.SignInFragment"
         android:label="@string/sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.plateplanner.startactivity.signup.view.SignUpFragment"
@@ -43,5 +47,10 @@
             app:destination="@id/signInFragment"
             app:popUpTo="@id/signInOptionsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.example.plateplanner.startactivity.ResetFragment"
+        android:label="fragment_reset"
+        tools:layout="@layout/fragment_reset" />
 
 </navigation>

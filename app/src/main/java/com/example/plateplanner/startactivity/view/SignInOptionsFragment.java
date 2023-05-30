@@ -37,7 +37,6 @@ public class SignInOptionsFragment extends Fragment {
     private final String TAG = "SignInOptionsFragment";
     Intent intent;
 
-    AppCompatButton signInWithEmailBtn;
     ImageButton googleBtn;
     TextView skipTv;
     TextView signInTv;
@@ -76,7 +75,6 @@ public class SignInOptionsFragment extends Fragment {
     }
 
     private void initUi(View view) {
-        signInWithEmailBtn = view.findViewById(R.id.emailSignBtn);
         googleBtn = view.findViewById(R.id.googleBtn);
         skipTv = view.findViewById(R.id.skipTv);
         signInTv = view.findViewById(R.id.signInTv);
@@ -85,17 +83,15 @@ public class SignInOptionsFragment extends Fragment {
     }
 
     private void setListeners() {
-        signInWithEmailBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         skipTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //enter as guest
+
+                startActivity(intent);
+                getActivity().finish();
             }
         });
         signInTv.setOnClickListener(new View.OnClickListener() {

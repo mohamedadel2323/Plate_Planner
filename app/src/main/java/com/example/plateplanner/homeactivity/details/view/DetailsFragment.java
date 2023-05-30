@@ -2,6 +2,7 @@ package com.example.plateplanner.homeactivity.details.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,10 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.PlanMeal;
 import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.startactivity.view.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -62,6 +67,7 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
     TextView steps;
     ImageButton favoriteBtn;
     ImageButton addToPlanBtn;
+    ImageButton shareToCalenderBtn;
     ImageButton backBtn;
     RecyclerView ingredientRv;
     YouTubePlayerView playerView;
@@ -95,14 +101,14 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         detailsFragmentPresenter = new DetailsFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         DetailsFragmentArgs detailsFragmentArgs = DetailsFragmentArgs.fromBundle(getArguments());
         mealPojo = detailsFragmentArgs.getMeal();
-        planMeal = new PlanMeal(mealPojo.getIdMeal() , mealPojo.getMealName() , mealPojo.getStrDrinkAlternate() , mealPojo.getStrCategory() , mealPojo.getStrArea() , mealPojo.getStrInstructions() , mealPojo.getStrMealThumb() , mealPojo.getStrTags() , mealPojo.getStrYoutube() , mealPojo.getStrIngredient1() , mealPojo.getStrIngredient2() , mealPojo.getStrIngredient3() , mealPojo.getStrIngredient4() , mealPojo.getStrIngredient5() , mealPojo.getStrIngredient6() , mealPojo.getStrIngredient7() , mealPojo.getStrIngredient8() , mealPojo.getStrIngredient9() , mealPojo.getStrIngredient10() , mealPojo.getStrIngredient11(), mealPojo.getStrIngredient12() , mealPojo.getStrIngredient13() , mealPojo.getStrIngredient14() , mealPojo.getStrIngredient15() , mealPojo.getStrIngredient16() , mealPojo.getStrIngredient17() , mealPojo.getStrIngredient18() , mealPojo.getStrIngredient19() , mealPojo.getStrIngredient20() , mealPojo.getStrMeasure1() , mealPojo.getStrMeasure2() , mealPojo.getStrMeasure3() , mealPojo.getStrMeasure4() , mealPojo.getStrMeasure5() , mealPojo.getStrMeasure6() , mealPojo.getStrMeasure7() , mealPojo.getStrMeasure8() , mealPojo.getStrMeasure9() , mealPojo.getStrMeasure10() ,mealPojo.getStrMeasure11() , mealPojo.getStrMeasure12() , mealPojo.getStrMeasure13() , mealPojo.getStrMeasure14() , mealPojo.getStrMeasure15() , mealPojo.getStrMeasure16() , mealPojo.getStrMeasure17() , mealPojo.getStrMeasure18() , mealPojo.getStrMeasure19() , mealPojo.getStrMeasure20() , mealPojo.getStrSource() , mealPojo.getStrImageSource() , mealPojo.getStrCreativeCommonsConfirmed() , mealPojo.getDateModified() , "");
+        planMeal = new PlanMeal(mealPojo.getIdMeal(), mealPojo.getMealName(), mealPojo.getStrDrinkAlternate(), mealPojo.getStrCategory(), mealPojo.getStrArea(), mealPojo.getStrInstructions(), mealPojo.getStrMealThumb(), mealPojo.getStrTags(), mealPojo.getStrYoutube(), mealPojo.getStrIngredient1(), mealPojo.getStrIngredient2(), mealPojo.getStrIngredient3(), mealPojo.getStrIngredient4(), mealPojo.getStrIngredient5(), mealPojo.getStrIngredient6(), mealPojo.getStrIngredient7(), mealPojo.getStrIngredient8(), mealPojo.getStrIngredient9(), mealPojo.getStrIngredient10(), mealPojo.getStrIngredient11(), mealPojo.getStrIngredient12(), mealPojo.getStrIngredient13(), mealPojo.getStrIngredient14(), mealPojo.getStrIngredient15(), mealPojo.getStrIngredient16(), mealPojo.getStrIngredient17(), mealPojo.getStrIngredient18(), mealPojo.getStrIngredient19(), mealPojo.getStrIngredient20(), mealPojo.getStrMeasure1(), mealPojo.getStrMeasure2(), mealPojo.getStrMeasure3(), mealPojo.getStrMeasure4(), mealPojo.getStrMeasure5(), mealPojo.getStrMeasure6(), mealPojo.getStrMeasure7(), mealPojo.getStrMeasure8(), mealPojo.getStrMeasure9(), mealPojo.getStrMeasure10(), mealPojo.getStrMeasure11(), mealPojo.getStrMeasure12(), mealPojo.getStrMeasure13(), mealPojo.getStrMeasure14(), mealPojo.getStrMeasure15(), mealPojo.getStrMeasure16(), mealPojo.getStrMeasure17(), mealPojo.getStrMeasure18(), mealPojo.getStrMeasure19(), mealPojo.getStrMeasure20(), mealPojo.getStrSource(), mealPojo.getStrImageSource(), mealPojo.getStrCreativeCommonsConfirmed(), mealPojo.getDateModified(), "");
 
         initUi(view);
         detailsFragmentPresenter.checkExistence(mealPojo.getIdMeal()).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (aBoolean!=null){
-                    if (aBoolean){
+                if (aBoolean != null) {
+                    if (aBoolean) {
                         favoriteBtn.setImageResource(R.drawable.solid_heart_icon);
                         clicked = true;
                     }
@@ -200,6 +206,7 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         steps = view.findViewById(R.id.stepsTv);
         favoriteBtn = view.findViewById(R.id.addToFavoriteDetailsBtn);
         addToPlanBtn = view.findViewById(R.id.addToPlanBtn);
+        shareToCalenderBtn = view.findViewById(R.id.shareToCalender);
         playerView = view.findViewById(R.id.videoPlayer);
         backBtn = view.findViewById(R.id.detailsBackButton);
         ingredientRv = view.findViewById(R.id.ingredientRv);
@@ -233,21 +240,64 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!clicked) {
-                    addMealToFavorites(mealPojo);
-                    favoriteBtn.setImageResource(R.drawable.solid_heart_icon);
-                    clicked = true;
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    if (!clicked) {
+                        addMealToFavorites(mealPojo);
+                        favoriteBtn.setImageResource(R.drawable.solid_heart_icon);
+                        clicked = true;
+                    } else {
+                        removeMealFromFavorites(mealPojo);
+                        favoriteBtn.setImageResource(R.drawable.border_heart_icon);
+                        clicked = false;
+                    }
                 } else {
-                    removeMealFromFavorites(mealPojo);
-                    favoriteBtn.setImageResource(R.drawable.border_heart_icon);
-                    clicked = false;
+                    Snackbar.make(getView(), "You need to signup first", Snackbar.LENGTH_SHORT).setAction("Sign up", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Add code here to handle the button click event
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
+                        }
+                    }).show();
                 }
             }
         });
 
         addToPlanBtn.setOnClickListener(view -> {
-            showDialog();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                showDialog();
+            } else {
+                Snackbar.make(getView(), "You need to signup first", Snackbar.LENGTH_SHORT).setAction("Sign up", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
+                    }
+                }).show();
+            }
         });
+
+        shareToCalenderBtn.setOnClickListener(view -> {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Calendar beginTime = Calendar.getInstance();
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                        .putExtra(CalendarContract.Events.TITLE, mealPojo.getMealName())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, mealPojo.getStrTags());
+
+                startActivity(intent);
+            } else {
+                Snackbar.make(getView(), "You need to signup first", Snackbar.LENGTH_SHORT).setAction("Sign up", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
+                    }
+                }).show();
+            }
+        });
+
 
     }
 
@@ -279,38 +329,22 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
     public void removeMealFromFavorites(MealPojo mealPojo) {
         detailsFragmentPresenter.removeMealFromFavourites(mealPojo);
     }
-    private void showDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Select a day of the week");
-        List<String> daysOfWeek = new ArrayList<>(Arrays.asList("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, daysOfWeek);
-        builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Remember the selected index
-                mSelectedIndex = which;
-            }
-        });
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // OK button clicked, do something with the selected day of the week
-                if (mSelectedIndex >= 0) {
-                    String selectedDay = daysOfWeek.get(mSelectedIndex);
-                    // Do something with the selected day of the week
-                    Toast.makeText(getContext() , selectedDay , Toast.LENGTH_SHORT).show();
-                    planMeal.setDay(selectedDay);
-                    detailsFragmentPresenter.addToPlan(planMeal);
-                }
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cancel button clicked, do nothing
-            }
-        });
-        builder.show();
+    private void showDialog() {
+        List<String> daysOfWeek = Arrays.asList("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, daysOfWeek);
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Select a day of the week")
+                .setSingleChoiceItems(adapter, 0, (dialog, which) -> mSelectedIndex = which)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    if (mSelectedIndex >= 0) {
+                        String selectedDay = daysOfWeek.get(mSelectedIndex);
+                        Toast.makeText(getContext(), selectedDay, Toast.LENGTH_SHORT).show();
+                        planMeal.setDay(selectedDay);
+                        detailsFragmentPresenter.addToPlan(planMeal);
+                    }
+                })
+                .setNegativeButton("Cancel", null).show();
     }
 }

@@ -14,10 +14,10 @@
 
 
         <com.airbnb.lottie.LottieAnimationView
-            android:elevation="2dp"
             android:id="@+id/signInLoadingAnimation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="2dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:text="@string/sign_in"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -117,15 +117,32 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/btn_back"
             android:backgroundTint="@color/black"
             android:text="@string/done"
             android:textColor="@color/white"
             android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/resetTv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/signInResultTv" />
 
+        <TextView
+            android:id="@+id/resetTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/text_back"
+            android:backgroundTint="#90000000"
+            android:gravity="center"
+            android:text="@string/forgot_your_password_reset_it"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

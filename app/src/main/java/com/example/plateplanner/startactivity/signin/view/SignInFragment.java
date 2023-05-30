@@ -39,6 +39,7 @@ public class SignInFragment extends Fragment implements SignInViewInterface {
     TextInputEditText emailEt;
     TextInputEditText passwordEt;
     TextView errorTv;
+    TextView resetTv;
     LottieAnimationView loadingLottie;
     Intent intent;
     SignInPresenter signInPresenter;
@@ -103,6 +104,7 @@ public class SignInFragment extends Fragment implements SignInViewInterface {
         passwordEt = view.findViewById(R.id.passwordSignInEt);
         doneBtn = view.findViewById(R.id.doneSignInButton);
         errorTv = view.findViewById(R.id.signInResultTv);
+        resetTv = view.findViewById(R.id.resetTv);
         loadingLottie = view.findViewById(R.id.signInLoadingAnimation);
     }
 
@@ -127,6 +129,9 @@ public class SignInFragment extends Fragment implements SignInViewInterface {
             public void onClick(View v) {
                 navController.navigateUp();
             }
+        });
+        resetTv.setOnClickListener(view ->{
+            Navigation.findNavController(getView()).navigate(SignInFragmentDirections.actionSignInFragmentToResetFragment());
         });
     }
 

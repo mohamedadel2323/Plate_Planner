@@ -1,5 +1,6 @@
 package com.example.plateplanner.homeactivity.home.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,9 @@ import com.example.plateplanner.startactivity.model.AuthSharedPreferences;
 import com.example.plateplanner.startactivity.model.CategoryPojo;
 import com.example.plateplanner.startactivity.model.MealPojo;
 import com.example.plateplanner.startactivity.model.Repository;
+import com.example.plateplanner.startactivity.view.MainActivity;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +82,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         homeFragmentPresenter = new HomeFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         initUi(view);
         hideUi();
-        clickListeners();
+
         //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
 
@@ -91,15 +95,27 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         addToFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!clicked) {
-                    homeFragmentPresenter.addToFavorites(dailyMeal);
-                    addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
-                    clicked = true;
-                } else {
-                    homeFragmentPresenter.removeFromFavorites(dailyMeal);
-                    addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
-                    clicked = false;
+                if(FirebaseAuth.getInstance().getCurrentUser() != null){
+                    if (!clicked) {
+                        homeFragmentPresenter.addToFavorites(dailyMeal);
+                        addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
+                        clicked = true;
+                    } else {
+                        homeFragmentPresenter.removeFromFavorites(dailyMeal);
+                        addToFavoriteBtn.setImageResource(R.drawable.border_heart_icon);
+                        clicked = false;
+                    }
+                }else {
+                    Snackbar.make(getView() , "You need to signup first" , Snackbar.LENGTH_SHORT).setAction("Sign up", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Add code here to handle the button click event
+                            startActivity( new Intent(getActivity() , MainActivity.class));
+                            getActivity().finish();
+                        }
+                    }).show();
                 }
+
             }
         });
 
@@ -131,6 +147,8 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
         categoriesRv.setAdapter(categoriesAdapter);
         countriesRv.setLayoutManager(layoutManager2);
         countriesRv.setAdapter(areasAdapter);
+
+        clickListeners();
     }
 
     private void hideUi() {
