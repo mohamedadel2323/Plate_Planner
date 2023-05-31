@@ -89,6 +89,15 @@ public class FavoritesFragment extends Fragment implements FavoritesFragmentView
             @Override
             public void onChanged(List<MealPojo> mealPojoList) {
                 favoritesAdapter.setMeals(mealPojoList);
+                if(mealPojoList.size() == 0){
+                    notifyMessageTv.setText("No Meals Yet , add some ^_^");
+                    notifyMessageTv.setVisibility(View.VISIBLE);
+                }else {
+                    notifyMessageTv.setVisibility(View.GONE);
+                }
+                if (!AuthSharedPreferences.getInstance(getContext()).getLoginStatus()){
+                    notifyMessageTv.setText("Sign up and you will be able to add your favorite meals.");
+                }
             }
         });
     }

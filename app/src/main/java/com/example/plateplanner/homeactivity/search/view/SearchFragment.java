@@ -86,10 +86,6 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
 
         initUi(view);
 
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.GONE);
-        }
         int mode = -1;
         String filter = "";
         Bundle args = getArguments();
@@ -302,14 +298,5 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     public void onIngredientClick(IngredientResponse.IngredientPojo ingredient) {
         mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
         searchFragmentPresenter.filterByIngredient(ingredient.getStrIngredient());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.VISIBLE);
-        }
     }
 }

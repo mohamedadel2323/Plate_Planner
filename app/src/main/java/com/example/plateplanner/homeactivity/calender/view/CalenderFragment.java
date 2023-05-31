@@ -121,6 +121,15 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
             @Override
             public void onChanged(List<PlanMeal> planMeals) {
                 planMealsAdapter.setMeals(planMeals);
+                if(planMeals.size() == 0){
+                    notifyMessageTv.setText("No Meals Yet , add some ^_^");
+                    notifyMessageTv.setVisibility(View.VISIBLE);
+                }else {
+                    notifyMessageTv.setVisibility(View.GONE);
+                }
+                if (!AuthSharedPreferences.getInstance(getContext()).getLoginStatus()){
+                    notifyMessageTv.setText("Sign up and you will be able to add your week plan meals.");
+                }
             }
         });
     }
