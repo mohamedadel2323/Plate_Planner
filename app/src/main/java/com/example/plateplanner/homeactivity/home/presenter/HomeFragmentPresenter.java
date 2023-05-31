@@ -1,12 +1,9 @@
 package com.example.plateplanner.homeactivity.home.presenter;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.plateplanner.homeactivity.home.view.HomeFragmentViewInterface;
-import com.example.plateplanner.model.PlanMeal;
-import com.example.plateplanner.network.FirebaseDelegate;
 import com.example.plateplanner.network.NetworkDelegate;
 import com.example.plateplanner.model.AreaResponse.AreaPojo;
 import com.example.plateplanner.model.CategoryPojo;

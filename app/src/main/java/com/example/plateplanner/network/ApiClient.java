@@ -1,6 +1,5 @@
 package com.example.plateplanner.network;
 
-import android.util.Log;
 
 import com.example.plateplanner.model.AreaResponse;
 import com.example.plateplanner.model.CategoryResponse;
@@ -90,7 +89,6 @@ public class ApiClient implements RemoteSource {
 
             @Override
             public void onFailure(Call<AreaResponse> call, Throwable t) {
-                Log.i(TAG, "call failed");
                 networkDelegate.onCategoryFailureResult(t.getLocalizedMessage());
             }
         };
@@ -128,7 +126,6 @@ public class ApiClient implements RemoteSource {
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
-                Log.e(TAG, t.toString());
                 networkDelegate.onSearchFailure(t.getLocalizedMessage());
             }
         });

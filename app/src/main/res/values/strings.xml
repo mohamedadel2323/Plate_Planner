@@ -36,4 +36,8 @@
     <string name="video">Video</string>
     <string name="forgot_your_password_reset_it">Forgot your password? <u>Reset it</u></string>
     <string name="reset_password">Reset Password</string>
+    <string name="week_plan">Week Plan</string>
+    <string name="upload_meals">Upload Meals</string>
+    <string name="sign_up_and_you_will_be_able_to_add_your_favorite_meals">Sign up and you will be able to add your favorite meals.</string>
+    <string name="sign_up_and_you_will_be_able_to_add_your_week_plan_meals">Sign up and you will be able to add your week plan meals.</string>
 </resources>

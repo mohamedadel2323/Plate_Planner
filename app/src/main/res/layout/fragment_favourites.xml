@@ -18,11 +18,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/favoritesNotifyTv"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        style="@style/TextViewStyle"
+        android:textStyle="normal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="8dp"
+        android:text="@string/sign_up_and_you_will_be_able_to_add_your_favorite_meals"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoritesRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingStart="16dp"
+        android:paddingStart="32dp"
+        android:layout_marginTop="32dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/textView2"

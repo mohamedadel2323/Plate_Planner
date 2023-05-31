@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
@@ -53,6 +54,7 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
     CalenderFragmentPresenter calenderFragmentPresenter;
     RecyclerView daysRv;
     RecyclerView planMealsRv;
+    TextView notifyMessageTv;
 
     public CalenderFragment() {
         // Required empty public constructor
@@ -76,9 +78,15 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
         super.onViewCreated(view, savedInstanceState);
         calenderFragmentPresenter = new CalenderFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         initUi(view);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null && !planMealsDownloadIndicator){
-            calenderFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            planMealsDownloadIndicator = true;
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            notifyMessageTv.setVisibility(View.GONE);
+            if (!planMealsDownloadIndicator){
+                calenderFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                planMealsDownloadIndicator = true;
+            }
+            getMealsByDay("SUNDAY");
+        }else {
+            notifyMessageTv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -92,6 +100,7 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
         weekDays.add(DayOfWeek.SATURDAY.toString());
         daysRv = view.findViewById(R.id.planRv);
         planMealsRv = view.findViewById(R.id.mealsPlanRv);
+        notifyMessageTv = view.findViewById(R.id.calenderNotifyTv);
         calenderAdapter = new CalenderAdapter(getContext(), weekDays, this);
         LinearLayoutManager planLayoutManager = new LinearLayoutManager(getContext());
         planLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -99,7 +108,6 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
         daysRv.setAdapter(calenderAdapter);
         planMealsAdapter = new PlanMealsAdapter(getContext(), planMeals, this, this);
         planMealsRv.setAdapter(planMealsAdapter);
-
     }
 
     @Override
@@ -109,7 +117,7 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
 
     @Override
     public void getMealsByDay(String day) {
-        calenderFragmentPresenter.getMealsByName(day).observe(this, new Observer<List<PlanMeal>>() {
+        calenderFragmentPresenter.getMealsByName(day).observe(getViewLifecycleOwner(), new Observer<List<PlanMeal>>() {
             @Override
             public void onChanged(List<PlanMeal> planMeals) {
                 planMealsAdapter.setMeals(planMeals);

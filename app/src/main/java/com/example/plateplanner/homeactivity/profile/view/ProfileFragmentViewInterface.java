@@ -8,8 +8,9 @@ import com.example.plateplanner.network.FirebaseDelegate;
 import java.util.List;
 
 public interface ProfileFragmentViewInterface {
-//    public void getCachedFavoriteMeals(LiveData<List<MealPojo>> meals);
-    public void uploadFavoriteMeals(String email , List<MealPojo> favMeals, FirebaseDelegate firebaseDelegate);
     public void logout();
+
+    void stopAnimation();
+
     public void showErrorMessage(String errorMessage);
 }

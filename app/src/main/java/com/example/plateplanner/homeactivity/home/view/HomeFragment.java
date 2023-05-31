@@ -12,7 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeFragmentViewInterface, RecyclerAdapter.OnCountryCardClickListener, RecyclerAdapter.OnAreaCardClickListener {
     private final String TAG = "HomeFragment";
-    //private static boolean downloadIndicator = false;
     ImageView mealImage;
     TextView mealName;
     HomeFragmentPresenter homeFragmentPresenter;
@@ -86,10 +84,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
         //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
-//        if (FirebaseAuth.getInstance().getCurrentUser() != null && !downloadIndicator){
-//            homeFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-//            downloadIndicator = true;
-//        }
+
         homeFragmentPresenter.getDailyInspirationMeal();
         homeFragmentPresenter.getCategories();
         homeFragmentPresenter.getCountries();
@@ -184,7 +179,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
                 if (aBoolean != null) {
                     if (aBoolean.booleanValue()) {
                         clicked = true;
-                        Log.e(TAG, "onChanged: from observer " + clicked);
                         addToFavoriteBtn.setImageResource(R.drawable.solid_heart_icon);
                     }
                 }
@@ -192,7 +186,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
             }
         });
         dailyMeal = mealPojo;
-        Log.e(TAG, mealPojo.toString());
         mealName.setText(mealPojo.getMealName());
         Glide.with(getContext())
                 .load(mealPojo.getStrMealThumb())
@@ -212,7 +205,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
     @Override
     public void showCategoriesList(List<CategoryPojo> categories) {
-        Log.i(TAG, categories.toString());
         categories.remove(categories.get(6));
         categoriesAdapter.setCategories(categories);
     }

@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".homeactivity.profile.view.ProfileFragment">
 
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/logoutLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
+
     <TextView
         android:id="@+id/textView"
         style="@style/TextViewStyle"
@@ -77,6 +92,23 @@
         android:background="@drawable/btn_back"
         android:backgroundTint="@color/black"
         android:text="@string/sign_up"
+        android:textAllCaps="false"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/uploadDataBtn"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/btn_back"
+        android:backgroundTint="@color/black"
+        android:text="@string/upload_meals"
         android:textAllCaps="false"
         android:layout_marginBottom="8dp"
         android:textColor="@color/white"

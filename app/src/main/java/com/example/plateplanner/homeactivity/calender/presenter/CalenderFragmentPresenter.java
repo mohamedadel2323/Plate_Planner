@@ -43,5 +43,6 @@ public class CalenderFragmentPresenter implements FirebaseDelegate {
     @Override
     public void onDownloadMealsSuccess(List<MealPojo> favMeals, List<PlanMeal> planMeals) {
         repository.insertPlanMealList(planMeals);
+        getMealsByName("SUNDAY");
     }
 }

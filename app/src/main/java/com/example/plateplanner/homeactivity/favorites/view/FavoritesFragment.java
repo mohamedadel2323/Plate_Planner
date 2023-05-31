@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
@@ -34,6 +35,7 @@ public class FavoritesFragment extends Fragment implements FavoritesFragmentView
     public static boolean favMealsDownloadIndicator = false;
 
     RecyclerView recyclerView;
+    TextView notifyMessageTv;
     FavoritesFragmentPresenter favoritesFragmentPresenter;
     FavoritesAdapter favoritesAdapter;
     List<MealPojo>meals = new ArrayList<>();
@@ -57,23 +59,33 @@ public class FavoritesFragment extends Fragment implements FavoritesFragmentView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+       initUi(view);
+        favoritesFragmentPresenter = new FavoritesFragmentPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance() , ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
+        favoritesFragmentPresenter.getAllFavoriteMeals();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            notifyMessageTv.setVisibility(View.GONE);
+            if(!favMealsDownloadIndicator){
+                favoritesFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                favMealsDownloadIndicator = true;
+            }
+        }else {
+            notifyMessageTv.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initUi(View view) {
         recyclerView = view.findViewById(R.id.favoritesRv);
+        notifyMessageTv = view.findViewById(R.id.favoritesNotifyTv);
         favoritesAdapter = new FavoritesAdapter(getContext() , meals , this);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext() , 2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(favoritesAdapter);
-        favoritesFragmentPresenter = new FavoritesFragmentPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance() , ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
-        favoritesFragmentPresenter.getAllFavoriteMeals();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null && !favMealsDownloadIndicator){
-            favoritesFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            favMealsDownloadIndicator = true;
-        }
     }
 
     @Override
     public void getAllFavoriteMeals(LiveData<List<MealPojo>> meals) {
-        meals.observe(getViewLifecycleOwner(), new Observer<List<MealPojo>>() {
+        meals.observe(this, new Observer<List<MealPojo>>() {
             @Override
             public void onChanged(List<MealPojo> mealPojoList) {
                 favoritesAdapter.setMeals(mealPojoList);

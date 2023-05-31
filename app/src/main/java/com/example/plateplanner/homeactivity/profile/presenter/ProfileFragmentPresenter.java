@@ -14,7 +14,7 @@ public class ProfileFragmentPresenter implements FirebaseDelegate {
 
     ProfileFragmentViewInterface view;
     Repository repository;
-    int endIndicator = 0;
+    int logoutIndicator = -1;
 
     public ProfileFragmentPresenter(ProfileFragmentViewInterface view, Repository repository) {
         this.view = view;
@@ -29,7 +29,8 @@ public class ProfileFragmentPresenter implements FirebaseDelegate {
         return repository.getAllPlanMeals();
     }
 
-    public void uploadMeals(String email, List<PlanMeal> planMeals, List<MealPojo> favMeals) {
+    public void uploadMeals(String email, List<PlanMeal> planMeals, List<MealPojo> favMeals , int logout) {
+        logoutIndicator = logout;
         repository.uploadMeals(email, planMeals, favMeals, this);
     }
 
@@ -40,8 +41,13 @@ public class ProfileFragmentPresenter implements FirebaseDelegate {
 
     @Override
     public void onSuccess() {
-        clearLocalDatabase();
-        view.logout();
+        if (logoutIndicator == 1){
+            clearLocalDatabase();
+            view.logout();
+        }else if (logoutIndicator == 0){
+            view.stopAnimation();
+            view.showErrorMessage("Uploaded Successfully");
+        }
     }
 
     @Override
@@ -51,7 +57,6 @@ public class ProfileFragmentPresenter implements FirebaseDelegate {
 
     @Override
     public void onDownloadMealsSuccess(List<MealPojo> favMeals, List<PlanMeal> planMeals) {
-        view.logout();
     }
 
 

@@ -123,7 +123,6 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
         mealName.setText(mealPojo.getMealName());
         mealCountry.setText(mealPojo.getStrArea());
         steps.setText(mealPojo.getStrInstructions());
-        Log.e(TAG, mealPojo.toString());
     }
 
     private ArrayList<Ingredient> createIngredientList(MealPojo mealPojo) {

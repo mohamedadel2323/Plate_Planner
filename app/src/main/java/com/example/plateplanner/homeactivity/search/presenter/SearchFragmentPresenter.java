@@ -84,6 +84,7 @@ public class SearchFragmentPresenter implements SearchNetworkDelegate, NetworkDe
 
     @Override
     public void onCategorySuccessResult(List<CategoryPojo> categories) {
+        categories.remove(categories.get(6));
         view.showCategoriesResult(categories);
     }
 

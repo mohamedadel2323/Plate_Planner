@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
 import com.example.plateplanner.homeactivity.search.presenter.SearchFragmentPresenter;
@@ -45,6 +46,7 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     private final String TAG = "SearchFragment";
     SearchView searchView;
     RadioGroup radioGroup;
+    LottieAnimationView mealClickLoading;
     RecyclerView mealsRecyclerView;
     SearchFragmentPresenter searchFragmentPresenter;
     SearchAdapter mealsSearchAdapter;
@@ -81,15 +83,9 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         super.onViewCreated(view, savedInstanceState);
 
         searchFragmentPresenter = new SearchFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
-        mealsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.MEALS);
-        categorySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.CATEGORIES);
-        countrySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.COUNTRIES);
-        ingredientsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.INGREDIENTS);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         initUi(view);
-        mealsRecyclerView.setAdapter(mealsSearchAdapter);
-        listeners();
+
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigation);
         if (bottomNavigationView != null) {
             bottomNavigationView.setVisibility(View.GONE);
@@ -107,7 +103,6 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
                     searchFragmentPresenter.filterByCategory(filter);
 
                 } else if (mode == 1) {
-                    Log.i("filter", filter);
                     mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
                     searchFragmentPresenter.filterByCountry(filter);
                     mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
@@ -122,6 +117,17 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         searchView = view.findViewById(R.id.searchView);
         radioGroup = view.findViewById(R.id.radioGroup);
         mealsRecyclerView = view.findViewById(R.id.mealsRv);
+        mealClickLoading = view.findViewById(R.id.mealClickLoading);
+
+        mealsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.MEALS);
+        categorySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.CATEGORIES);
+        countrySearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.COUNTRIES);
+        ingredientsSearchAdapter = new SearchAdapter(getContext(), meals, categories, countries, ingredients, this, this, this, this, SearchAdapter.INGREDIENTS);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mealsRecyclerView.setAdapter(mealsSearchAdapter);
+        listeners();
+
     }
 
     private void listeners() {
@@ -268,12 +274,15 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
 
     @Override
     public void goToDetails(List<MealPojo> mealPojoList) {
+        mealClickLoading.setVisibility(View.GONE);
+        mealClickLoading.pauseAnimation();
         Navigation.findNavController(getView()).navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(mealPojoList.get(0)));
     }
 
     @Override
     public void onMealClick(MealPojo meal) {
-        Log.i(TAG, meal.toString() + "hewewewewewe");
+        mealClickLoading.setVisibility(View.VISIBLE);
+        mealClickLoading.playAnimation();
         searchFragmentPresenter.getMealById(Integer.parseInt(meal.getIdMeal()));
     }
 

@@ -20,6 +20,7 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.ViewHo
     Context context;
     List<String> days;
     CalenderAdapter.OnDayCardClickListener dayListener;
+    private int selectedItem = 0;
 
     public CalenderAdapter(Context context, List<String> days, CalenderAdapter.OnDayCardClickListener dayListener) {
         this.context = context;
@@ -49,10 +50,18 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CalenderAdapter.ViewHolder holder, int position) {
         holder.dayName.setText(days.get(position));
+        if (position == selectedItem) {
+            holder.cardView.setBackground(context.getDrawable(R.drawable.day_back_selected));
+        } else {
+            holder.cardView.setBackground(context.getDrawable(R.drawable.day_back_normal));
+        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectedItem = holder.getAdapterPosition();
                 dayListener.onDayClick(days.get(holder.getAdapterPosition()));
+                notifyDataSetChanged();
+
             }
         });
     }

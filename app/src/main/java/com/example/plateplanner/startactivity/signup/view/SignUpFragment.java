@@ -121,6 +121,7 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface{
 
         String emailRegex = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         Pattern pattern = Pattern.compile(emailRegex);
+        Pattern passwordPattern = Pattern.compile(".*[a-zA-Z]+.*");
 
         authModel.setName(displayNameEt.getText().toString());
         authModel.setEmail(emailEt.getText().toString());
@@ -135,6 +136,12 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface{
         }
         if (authModel.getPassword().isEmpty()) {
             resultMessage = "Password field can't be empty.";
+        }
+        if (authModel.getPassword().length() < 8){
+            resultMessage = "Password length can't be less than 8.";
+        }
+        if (!passwordPattern.matcher(authModel.getPassword()).matches()){
+            resultMessage = "Password must contain at least one character.";
         }
         if (confirmPasswordEt.getText().toString().isEmpty()) {
             resultMessage = "Confirm Password field can't be empty.";

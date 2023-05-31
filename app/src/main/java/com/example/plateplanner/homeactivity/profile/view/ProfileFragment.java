@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.plateplanner.R;
@@ -29,7 +30,6 @@ import com.example.plateplanner.model.PlanMeal;
 import com.example.plateplanner.model.Repository;
 import com.example.plateplanner.network.ApiClient;
 import com.example.plateplanner.network.FirebaseCalls;
-import com.example.plateplanner.network.FirebaseDelegate;
 import com.example.plateplanner.startactivity.view.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -43,9 +43,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
     TextView profileName;
     TextView profileEmail;
     AppCompatButton signUpBtn;
+    AppCompatButton uploadDataBtn;
     ProfileFragmentPresenter profileFragmentPresenter;
     List<MealPojo> favMeals;
-    List<PlanMeal> mplanMeals;
+    List<PlanMeal> mPlanMeals;
+    LottieAnimationView loadingAnimationView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -68,11 +70,8 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        logoutBtn = view.findViewById(R.id.logoutBtn);
-        profileImg = view.findViewById(R.id.profileImage);
-        profileName = view.findViewById(R.id.profileName);
-        profileEmail = view.findViewById(R.id.profileEmail);
-        signUpBtn = view.findViewById(R.id.signUpButton);
+
+        initUi(view);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             profileFragmentPresenter = new ProfileFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
@@ -85,7 +84,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
             profileFragmentPresenter.getCashedPlanMeals().observe(getViewLifecycleOwner(), new Observer<List<PlanMeal>>() {
                 @Override
                 public void onChanged(List<PlanMeal> planMeals) {
-                    mplanMeals = planMeals;
+                    mPlanMeals = planMeals;
                 }
             });
             signUpBtn.setVisibility(View.GONE);
@@ -96,32 +95,21 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
                             .placeholder(R.drawable.person)
                             .error(R.drawable.person)).into(profileImg);
         } else {
+            uploadDataBtn.setVisibility(View.GONE);
             logoutBtn.setVisibility(View.GONE);
             profileImg.setImageResource(R.drawable.person);
         }
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                profileFragmentPresenter.uploadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail() , mplanMeals , favMeals);
-            }
-        });
-        signUpBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
-        });
 
     }
 
-    @Override
-    public void uploadFavoriteMeals(String email, List<MealPojo> favMeals, FirebaseDelegate firebaseDelegate) {
-
-    }
 
     @Override
     public void logout() {
         FirebaseAuth.getInstance().signOut();
         AuthSharedPreferences.getInstance(getContext()).setLoginStatus(false);
+        loadingAnimationView.setVisibility(View.GONE);
+        loadingAnimationView.pauseAnimation();
         FavoritesFragment.favMealsDownloadIndicator = false;
         CalenderFragment.planMealsDownloadIndicator = false;
         startActivity(new Intent(getActivity(), MainActivity.class));
@@ -129,7 +117,44 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
     }
 
     @Override
+    public void stopAnimation(){
+        loadingAnimationView.setVisibility(View.GONE);
+        loadingAnimationView.pauseAnimation();
+    }
+
+    @Override
     public void showErrorMessage(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    void initUi(View view) {
+        logoutBtn = view.findViewById(R.id.logoutBtn);
+        profileImg = view.findViewById(R.id.profileImage);
+        profileName = view.findViewById(R.id.profileName);
+        profileEmail = view.findViewById(R.id.profileEmail);
+        signUpBtn = view.findViewById(R.id.signUpButton);
+        uploadDataBtn = view.findViewById(R.id.uploadDataBtn);
+        loadingAnimationView = view.findViewById(R.id.logoutLoading);
+        listeners();
+    }
+
+    void listeners() {
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingAnimationView.setVisibility(View.VISIBLE);
+                loadingAnimationView.playAnimation();
+                profileFragmentPresenter.uploadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail(), mPlanMeals, favMeals , 1);
+            }
+        });
+        signUpBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        });
+        uploadDataBtn.setOnClickListener(v -> {
+            loadingAnimationView.setVisibility(View.VISIBLE);
+            loadingAnimationView.playAnimation();
+            profileFragmentPresenter.uploadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail(), mPlanMeals, favMeals , 0);
+        });
     }
 }
