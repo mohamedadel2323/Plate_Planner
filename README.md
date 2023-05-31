@@ -4,24 +4,24 @@ Plate Planner is an app that helps users plan their meals by providing inspirati
 # Technologies
 The technologies used in Plate Planner are:
 
-Navigation Component for navigation.
-Lottie Animation Library for animation.
-Retrofit for networking.
-Firebase Authentication for user authentication.
-Room for caching.
-Firebase Firestore to preserve account data.
-Google Calendar API for calendar integration.
-Glide for download and cache images.
+- Navigation Component for navigation.
+- Lottie Animation Library for animation.
+- Retrofit for networking.
+- Firebase Authentication for user authentication.
+- Room for caching.
+- Firebase Firestore to preserve account data.
+- Google Calendar API for calendar integration.
+- Glide for download and cache images.
 
 # Features
 Plate Planner comes with several features that make it easy to plan and organize meals. These features include:
 
-Login and signup using email and Google account.
-Preview daily inspiration meals.
-Filter meals based on country and categories.
-Search meals by first character and by name.
-Add meals to your favorite list.
-Add meals to your weekly plan.
-Preview meal details, including cooking steps and YouTube video.
-Save your data.
-Add meals to Google Calendar.
+- Login and signup using email and Google account.
+- Preview daily inspiration meals.
+- Filter meals based on country and categories.
+- Search meals by first character and by name.
+- Add meals to your favorite list.
+- Add meals to your weekly plan.
+- Preview meal details, including cooking steps and YouTube video.
+- Save your data.
+- Add meals to Google Calendar.
