@@ -11,6 +11,7 @@ Firebase Authentication for user authentication.
 Room for caching.
 Firebase Firestore to preserve account data.
 Google Calendar API for calendar integration.
+Glide for download and cache images.
 
 # Features
 Plate Planner comes with several features that make it easy to plan and organize meals. These features include:
