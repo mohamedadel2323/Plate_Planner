@@ -334,7 +334,7 @@ public class DetailsFragment extends Fragment implements DetailsFragmentViewInte
                 .setPositiveButton("OK", (dialog, which) -> {
                     if (mSelectedIndex >= 0) {
                         String selectedDay = daysOfWeek.get(mSelectedIndex);
-                        Toast.makeText(getContext(), selectedDay, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Added to "+selectedDay, Toast.LENGTH_SHORT).show();
                         planMeal.setDay(selectedDay);
                         detailsFragmentPresenter.addToPlan(planMeal);
                     }
