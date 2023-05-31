@@ -40,6 +40,7 @@ public class ProfileFragmentPresenter implements FirebaseDelegate {
 
     @Override
     public void onSuccess() {
+        clearLocalDatabase();
         view.logout();
     }
 

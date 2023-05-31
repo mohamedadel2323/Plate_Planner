@@ -25,12 +25,15 @@ import com.example.plateplanner.model.AuthSharedPreferences;
 import com.example.plateplanner.model.MealPojo;
 import com.example.plateplanner.model.PlanMeal;
 import com.example.plateplanner.model.Repository;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CalenderFragment extends Fragment implements CalenderFragmentViewInterface, CalenderAdapter.OnDayCardClickListener, PlanMealsAdapter.OnPlanMealCardClickListener, PlanMealsAdapter.OnPlanMealCardLongClickListener {
+
+    public static boolean planMealsDownloadIndicator = false;
 
 
     public enum DayOfWeek {
@@ -73,7 +76,10 @@ public class CalenderFragment extends Fragment implements CalenderFragmentViewIn
         super.onViewCreated(view, savedInstanceState);
         calenderFragmentPresenter = new CalenderFragmentPresenter(this, Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance(), ApiClient.getInstance(), ConcreteLocalSource.getInstance(getContext())));
         initUi(view);
-
+        if (FirebaseAuth.getInstance().getCurrentUser() != null && !planMealsDownloadIndicator){
+            calenderFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            planMealsDownloadIndicator = true;
+        }
     }
 
     private void initUi(View view) {

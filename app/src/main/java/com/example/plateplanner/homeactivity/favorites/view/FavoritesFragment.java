@@ -24,11 +24,14 @@ import com.example.plateplanner.network.FirebaseCalls;
 import com.example.plateplanner.model.AuthSharedPreferences;
 import com.example.plateplanner.model.MealPojo;
 import com.example.plateplanner.model.Repository;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesFragment extends Fragment implements FavoritesFragmentViewInterface, FavoritesAdapter.OnFavoriteMealCardClickListener {
+
+    public static boolean favMealsDownloadIndicator = false;
 
     RecyclerView recyclerView;
     FavoritesFragmentPresenter favoritesFragmentPresenter;
@@ -62,6 +65,10 @@ public class FavoritesFragment extends Fragment implements FavoritesFragmentView
         recyclerView.setAdapter(favoritesAdapter);
         favoritesFragmentPresenter = new FavoritesFragmentPresenter(this , Repository.getInstance(AuthSharedPreferences.getInstance(getContext()), FirebaseCalls.getInstance() , ApiClient.getInstance() , ConcreteLocalSource.getInstance(getContext())));
         favoritesFragmentPresenter.getAllFavoriteMeals();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null && !favMealsDownloadIndicator){
+            favoritesFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            favMealsDownloadIndicator = true;
+        }
     }
 
     @Override

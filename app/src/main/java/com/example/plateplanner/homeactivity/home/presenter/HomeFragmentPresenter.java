@@ -16,7 +16,7 @@ import com.example.plateplanner.model.Repository;
 
 import java.util.List;
 
-public class HomeFragmentPresenter implements NetworkDelegate , FirebaseDelegate {
+public class HomeFragmentPresenter implements NetworkDelegate{
     private final String TAG = "HomeFragmentPresenter";
     HomeFragmentViewInterface view;
     Repository repository;
@@ -45,11 +45,6 @@ public class HomeFragmentPresenter implements NetworkDelegate , FirebaseDelegate
     public LiveData<Boolean> checkExistence(String mealId){
         return repository.checkExistence(mealId);
     }
-
-    public void downloadMeals(String email){
-        repository.downloadMeals(email , this);
-    }
-
 
     @Override
     public void onSuccessResult(MealPojo mealPojo) {
@@ -90,24 +85,6 @@ public class HomeFragmentPresenter implements NetworkDelegate , FirebaseDelegate
     @Override
     public void onIngredientFailureResult(String errorMessage) {
 
-    }
-
-    @Override
-    public void onSuccess() {
-
-    }
-
-    @Override
-    public void onFail(String errorMessage) {
-
-    }
-
-
-    @Override
-    public void onDownloadMealsSuccess(List<MealPojo> favMeals, List<PlanMeal> planMeals) {
-        Log.e(TAG, "onDownloadMealsSuccess: download success " );
-        repository.insertFavMealList(favMeals);
-        repository.insertPlanMealList(planMeals);
     }
 
 }

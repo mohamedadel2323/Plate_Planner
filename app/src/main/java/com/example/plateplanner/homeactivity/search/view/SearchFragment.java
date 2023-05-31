@@ -57,6 +57,7 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
     ArrayList<IngredientResponse.IngredientPojo> ingredients = new ArrayList<>();
     ArrayList<IngredientResponse.IngredientPojo> searchIngredients = new ArrayList<>();
     Disposable ingredientSearch;
+    Disposable ingredientSearch2;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -151,17 +152,29 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.categoryRb:
-                        if (ingredientSearch != null){
+                        if (ingredientSearch != null) {
+                            if (ingredientSearch2 != null) {
+                                ingredientSearch2.dispose();
+                                ingredientSearch2 = null;
+                            }
                             ingredientSearch.dispose();
                             ingredientSearch = null;
+
+                            attachSearch();
                         }
                         mealsRecyclerView.swapAdapter(categorySearchAdapter, true);
                         searchFragmentPresenter.getCategories();
                         break;
                     case R.id.CountryRb:
-                        if (ingredientSearch != null){
+                        if (ingredientSearch != null) {
+                            if (ingredientSearch2 != null) {
+                                ingredientSearch2.dispose();
+                                ingredientSearch2 = null;
+                            }
                             ingredientSearch.dispose();
                             ingredientSearch = null;
+
+                            attachSearch();
                         }
                         mealsRecyclerView.swapAdapter(countrySearchAdapter, true);
                         searchFragmentPresenter.getCountries();
@@ -181,13 +194,13 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
                                             @Override
                                             public boolean onQueryTextChange(String newText) {
                                                 emitter.onNext(newText);
-                                                return false;
+                                                return true;
                                             }
                                         });
                                     }
                                 }).debounce(2, TimeUnit.SECONDS)
                                 .subscribe(term -> {
-                                    Observable.fromIterable(ingredients)
+                                    ingredientSearch2 = Observable.fromIterable(ingredients)
                                             .subscribeOn(AndroidSchedulers.mainThread())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .filter(s -> s.getStrIngredient().toLowerCase().contains(term.toLowerCase()))
@@ -203,6 +216,28 @@ public class SearchFragment extends Fragment implements SearchFragmentViewInterf
         });
     }
 
+    private void attachSearch() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (Objects.equals(query, "")) {
+                    return false;
+                }
+                searchFragmentPresenter.searchByName(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (Objects.equals(newText, "")) {
+                    return false;
+                }
+                mealsRecyclerView.swapAdapter(mealsSearchAdapter, true);
+                searchFragmentPresenter.searchByLetter(newText);
+                return true;
+            }
+        });
+    }
 
     @Override
     public void showSearchResult(List<MealPojo> mealPojoList) {

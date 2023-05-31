@@ -43,7 +43,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeFragmentViewInterface, RecyclerAdapter.OnCountryCardClickListener, RecyclerAdapter.OnAreaCardClickListener {
     private final String TAG = "HomeFragment";
-    private static boolean downloadIndicator = false;
+    //private static boolean downloadIndicator = false;
     ImageView mealImage;
     TextView mealName;
     HomeFragmentPresenter homeFragmentPresenter;
@@ -86,10 +86,10 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface,
 
         //getActivity().findViewById(R.id.bottomNavigation).setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null && !downloadIndicator){
-            homeFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            downloadIndicator = true;
-        }
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null && !downloadIndicator){
+//            homeFragmentPresenter.downloadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//            downloadIndicator = true;
+//        }
         homeFragmentPresenter.getDailyInspirationMeal();
         homeFragmentPresenter.getCategories();
         homeFragmentPresenter.getCountries();

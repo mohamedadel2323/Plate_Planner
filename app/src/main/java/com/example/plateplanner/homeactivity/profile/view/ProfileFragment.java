@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.plateplanner.R;
 import com.example.plateplanner.datebase.ConcreteLocalSource;
+import com.example.plateplanner.homeactivity.calender.view.CalenderFragment;
+import com.example.plateplanner.homeactivity.favorites.view.FavoritesFragment;
 import com.example.plateplanner.homeactivity.profile.presenter.ProfileFragmentPresenter;
 import com.example.plateplanner.model.AuthSharedPreferences;
 import com.example.plateplanner.model.MealPojo;
@@ -101,7 +103,6 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileFragmentPresenter.clearLocalDatabase();
                 profileFragmentPresenter.uploadMeals(FirebaseAuth.getInstance().getCurrentUser().getEmail() , mplanMeals , favMeals);
             }
         });
@@ -121,6 +122,8 @@ public class ProfileFragment extends Fragment implements ProfileFragmentViewInte
     public void logout() {
         FirebaseAuth.getInstance().signOut();
         AuthSharedPreferences.getInstance(getContext()).setLoginStatus(false);
+        FavoritesFragment.favMealsDownloadIndicator = false;
+        CalenderFragment.planMealsDownloadIndicator = false;
         startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();
     }
