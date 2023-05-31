@@ -126,6 +126,9 @@ public class SignInOptionsFragment extends Fragment {
                 .build();
 
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
+            startActivityForResult(googleSignInClient.getSignInIntent(), GOOGLE_REQUEST);
+        });
         Intent googleSignIn = googleSignInClient.getSignInIntent();
         startActivityForResult(googleSignIn, GOOGLE_REQUEST);
     }
